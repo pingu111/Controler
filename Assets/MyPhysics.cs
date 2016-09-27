@@ -4,8 +4,7 @@ using System.Collections;
 public class MyPhysics : MonoBehaviour
 {
 
-    private Vector2 acceleration;
-    public Vector2 playerGivenAcceleration;
+    public Vector2 playerGivenSpeed;
     private Vector2 speed;
     public Vector2 position { get; private set; }
     private MovePlayer move;
@@ -37,7 +36,6 @@ public class MyPhysics : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        acceleration = new Vector2(0,0);
         speed = new Vector2(0,0);
 
         move = this.gameObject.GetComponent<MovePlayer>();
@@ -53,41 +51,37 @@ public class MyPhysics : MonoBehaviour
     private void drag(Vector2 value)
     {
         //change x value
-        if (acceleration.x > 0)
+        if (speed.x > 0)
         {
-            acceleration.x = acceleration.x - value.x;
-            if (acceleration.x < 0)
+            speed.x = speed.x - value.x;
+            if (speed.x < 0)
             {
-                acceleration.x = 0;
                 speed.x = 0;
             }
         }
-        else if(acceleration.x < 0)
+        else if(speed.x < 0)
         {
-            acceleration.x = acceleration.x + value.x;
-            if (acceleration.x > 0)
+            speed.x = speed.x + value.x;
+            if (speed.x > 0)
             {
-                acceleration.x = 0;
                 speed.x = 0;
             }
         }
             
         //change y value
-        if (acceleration.y > 0)
+        if (speed.y > 0)
         {
-            acceleration.y = acceleration.y - value.y;
-            if (acceleration.y < 0)
+            speed.y = speed.y - value.y;
+            if (speed.y < 0)
             {
-                acceleration.y = 0;
                 speed.y = 0;
             }
         }
-        else if (acceleration.y < 0)
+        else if (speed.y < 0)
         {
-            acceleration.y = acceleration.y + value.y;
-            if (acceleration.y > 0)
+            speed.y = speed.y + value.y;
+            if (speed.y > 0)
             {
-                acceleration.y = 0;
                 speed.y = 0;
             }
         }
@@ -98,21 +92,19 @@ public class MyPhysics : MonoBehaviour
     /// </summary>
 	private void gravityCalculator()
     {
-        acceleration.y -= gravity;
+        speed.y -= gravity;
     }
     
     // Update is called once per frame
 	void Update ()
     {
-        acceleration = playerGivenAcceleration;
+        speed = playerGivenSpeed;
 
         bool isGravityAnabled = false;
         //changements pour la friction
         Vector2 friction = new Vector2(0,0);
         if(move.isInContactWithPlatform)
         {
-            if (acceleration.y < 0)
-                acceleration.y = 0;
             if (speed.y < 0)
                 speed.y = 0;
             friction = new Vector2(groundFriction,0);
@@ -132,10 +124,8 @@ public class MyPhysics : MonoBehaviour
         if(isGravityAnabled)
             gravityCalculator();
 
-        Debug.Log("input :"+playerGivenAcceleration);
-        Debug.Log("calculus :"+acceleration);
-        //update speed et position
-        speed = speed + (acceleration * Time.deltaTime);
+        Debug.Log("input :"+playerGivenSpeed);
+        //update position
         Debug.Log("speed :"+speed);
         position = position + (speed * Time.deltaTime);
         Debug.Log("position :" + position);
