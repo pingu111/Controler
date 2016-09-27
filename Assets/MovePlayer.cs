@@ -58,11 +58,11 @@ public class MovePlayer : MonoBehaviour {
     {
         float xAxis = Input.GetAxis("XAxis");
         if(!isInContactWithWall)
-            this.gameObject.GetComponent<MyPhysics>().acceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().acceleration.y, 0);
+            this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.y, 0);
 
         if (Input.GetButtonDown("Jump") && (isInContactWithPlatform || !doubleJumpedUsed))
         {
-            this.gameObject.GetComponent<MyPhysics>().acceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().acceleration.x, speedJumpY, 0);
+            this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
             if (!isInContactWithPlatform && !doubleJumpedUsed)
                 doubleJumpedUsed = true;
         }
