@@ -99,7 +99,14 @@ public class MyPhysics : MonoBehaviour
         Vector2 friction = new Vector2(0,0);
         if(move.isInContactWithPlatform)
         {
+            if (acceleration.y < 0)
+                acceleration.y = 0;
             friction = speed*groundFriction;
+        }
+        else if (move.isInContactWithWall)
+        {
+            friction = speed * groundFriction;
+            isGravityAnabled = true;
         }
         else
         {
