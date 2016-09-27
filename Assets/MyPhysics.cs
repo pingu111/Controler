@@ -9,10 +9,21 @@ public class MyPhysics : MonoBehaviour
     public Vector2 position { get; private set; }
     private MovePlayer move;
 
+    /// <summary>
+    /// The gravity of the world
+    /// </summary>
     [SerializeField]
     float gravity;
+
+    /// <summary>
+    /// The friction of the air in this world
+    /// </summary>
     [SerializeField]
     float airFriction;
+
+    /// <summary>
+    /// The friction of the ground on this world
+    /// </summary>
     [SerializeField]
     float groundFriction;
 
@@ -25,9 +36,15 @@ public class MyPhysics : MonoBehaviour
         move = this.gameObject.GetComponent<MovePlayer>();
 	}
 
-    /**
-        reduit les deux valeurs de values de value correspondant vers 0 (s'arrete a 0 si on le dépasse)
-    */
+
+
+
+    /// <summary>
+    /// reduit les deux valeurs de values de value correspondant vers 0 (s'arrete a 0 si on le dépasse)
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="values"></param>
+    /// <returns></returns>
     private Vector2 drag(Vector2 value, Vector2 values)
     {
         Vector2 toReturn = values;

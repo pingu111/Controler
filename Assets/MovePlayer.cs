@@ -6,9 +6,6 @@ public class MovePlayer : MonoBehaviour {
     public float speedX;
     public float speedJumpY;
 
-    // The gravity of this world
-    public float gravity;
-
     // Is the player in contact wiith a plateform ?
     public bool isInContactWithPlatform;
 
@@ -18,7 +15,7 @@ public class MovePlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        Physics.gravity = new Vector3(0, -gravity, 0);
+
     }
 
     // Update is called once per frame
@@ -44,6 +41,9 @@ public class MovePlayer : MonoBehaviour {
             isInContactWithPlatform = false;
     }
 
+    /// <summary>
+    /// Get the inputs of the player, and apply it to the player
+    /// </summary>
     void controls()
     {
         float xAxis = Input.GetAxis("XAxis");

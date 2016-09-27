@@ -3,15 +3,23 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-
+    /// <summary>
+    /// The prefab to build the plateforms
+    /// </summary>
     public GameObject platformPrefab;
 
     /// <summary>
-    /// List of the scale and position of the platforms
+    /// List of the position of the platforms
     /// Position : betweeen 0 and 1
+    /// </summary>
+    /// 
+    public List<Vector3> posPlatforms;
+
+
+    /// <summary>
+    /// List of the scale of the platforms
     /// Scale : whatever you want
     /// </summary>
-    public List<Vector3> posPlatforms;
     public List<Vector3> scalePlatforms;
 
     // Use this for initialization
@@ -26,13 +34,16 @@ public class GameManager : MonoBehaviour
         initPlatforms();
 	}
 	
+    /// <summary>
+    /// Initialize the walls, ground, and roof
+    /// </summary>
     void initWalls()
     {
         GameObject ground = Instantiate(platformPrefab);
         ground.transform.parent = this.transform;
         Vector3 posGround = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
         ground.transform.position = new Vector3(0, posGround.y + ground.GetComponent<Collider>().bounds.size.y / 2, 0);
-        ground.transform.localScale = new Vector3(40, 1, 1);
+        ground.transform.localScale = new Vector3(100, 1, 1);
         ground.gameObject.name = "Ground";
 
 
@@ -40,7 +51,7 @@ public class GameManager : MonoBehaviour
         roof.transform.parent = this.transform;
         Vector3 posRoof = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         roof.transform.position = new Vector3(0, posRoof.y - ground.GetComponent<Collider>().bounds.size.y / 2, 0);
-        roof.transform.localScale = new Vector3(40, 1, 1);
+        roof.transform.localScale = new Vector3(100, 1, 1);
         roof.gameObject.name = "Roof";
 
 
@@ -48,7 +59,7 @@ public class GameManager : MonoBehaviour
         leftWall.transform.parent = this.transform;
         Vector3 posLeftWall = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, 0));
         leftWall.transform.position = new Vector3(posLeftWall.x + leftWall.GetComponent<Collider>().bounds.size.y / 2, 0 , 0);
-        leftWall.transform.localScale = new Vector3(40, 1, 1);
+        leftWall.transform.localScale = new Vector3(100, 1, 1);
         leftWall.transform.Rotate(new Vector3(0, 0, 90));
         leftWall.gameObject.name = "LeftWall";
 
@@ -57,12 +68,15 @@ public class GameManager : MonoBehaviour
         rightWall.transform.parent = this.transform;
         Vector3 posRightWall = Camera.main.ViewportToWorldPoint(new Vector3(1f, 0.5f, 0));
         rightWall.transform.position = new Vector3(posRightWall.x - rightWall.GetComponent<Collider>().bounds.size.y / 2, 0, 0);
-        rightWall.transform.localScale = new Vector3(40, 1, 1);
+        rightWall.transform.localScale = new Vector3(100, 1, 1);
         rightWall.transform.Rotate(new Vector3(0, 0, -90));
         rightWall.gameObject.name = "RightWall";
 
     }
 
+    /// <summary>
+    /// Initialize the platforms : scale and positions
+    /// </summary>
     void initPlatforms()
     {
         for(int i = 0; i< posPlatforms.Count; i++)
