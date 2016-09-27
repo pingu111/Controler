@@ -25,6 +25,7 @@ public class MovePlayer : MonoBehaviour {
     void Update ()
     {
         controls();
+        this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;
     }
 
     void OnCollisionEnter(Collision collision)

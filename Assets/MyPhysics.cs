@@ -118,12 +118,12 @@ public class MyPhysics : MonoBehaviour
         if(isGravityAnabled)
             gravityCalculator();
 
-        Debug.Log("input :"+playerGivenAcceleration);
-        Debug.Log("calculus :"+acceleration);
+       // Debug.Log("input :"+playerGivenAcceleration);
+       // Debug.Log("calculus :"+acceleration);
         //update speed et position
         speed = speed + (acceleration * Time.deltaTime);
-        Debug.Log("speed :"+speed);
+       // Debug.Log("speed :"+speed);
         position = position + (speed * Time.deltaTime);
-        Debug.Log("position :" + position);
+        //Debug.Log("position :" + position);
 	}
 }
