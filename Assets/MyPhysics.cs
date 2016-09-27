@@ -57,13 +57,19 @@ public class MyPhysics : MonoBehaviour
         {
             acceleration.x = acceleration.x - value.x;
             if (acceleration.x < 0)
+            {
                 acceleration.x = 0;
+                speed.x = 0;
+            }
         }
         else if(acceleration.x < 0)
         {
             acceleration.x = acceleration.x + value.x;
             if (acceleration.x > 0)
+            {
                 acceleration.x = 0;
+                speed.x = 0;
+            }
         }
             
         //change y value
@@ -71,13 +77,19 @@ public class MyPhysics : MonoBehaviour
         {
             acceleration.y = acceleration.y - value.y;
             if (acceleration.y < 0)
+            {
                 acceleration.y = 0;
+                speed.y = 0;
+            }
         }
         else if (acceleration.y < 0)
         {
             acceleration.y = acceleration.y + value.y;
             if (acceleration.y > 0)
+            {
                 acceleration.y = 0;
+                speed.y = 0;
+            }
         }
     }
 	
@@ -103,25 +115,25 @@ public class MyPhysics : MonoBehaviour
                 acceleration.y = 0;
             if (speed.y < 0)
                 speed.y = 0;
-            friction = speed*groundFriction;
+            friction = new Vector2(groundFriction,0);
         }
         else if (move.isInContactWithWall)
         {
-            friction = speed * groundFriction;
+            friction = new Vector2(groundFriction,0);
             isGravityAnabled = true;
         }
         else
         {
             isGravityAnabled = true;
-            friction = speed*airFriction;
+            friction = new Vector2(airFriction, airFriction);
         }
         drag(friction);
 
         if(isGravityAnabled)
             gravityCalculator();
 
-       // Debug.Log("input :"+playerGivenAcceleration);
-       // Debug.Log("calculus :"+acceleration);
+        Debug.Log("input :"+playerGivenAcceleration);
+        Debug.Log("calculus :"+acceleration);
         //update speed et position
         speed = speed + (acceleration * Time.deltaTime);
         Debug.Log("speed :"+speed);
