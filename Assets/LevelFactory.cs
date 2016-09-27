@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour
+public class LevelFactory : MonoBehaviour
 {
     /// <summary>
     /// The prefab to build the plateforms

@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678725, b: 0.5750856, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692528, g: 0.49678677, b: 0.57508475, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -162,8 +162,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 343032133}
   - 114: {fileID: 343032134}
+  - 114: {fileID: 343032136}
+  - 114: {fileID: 343032135}
   m_Layer: 0
-  m_Name: Decor
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 343032132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d86d0201c7e874f8546866a9c03fdb, type: 3}
+  m_Script: {fileID: 11500000, guid: 26bb6eb9232e5ec469f797755272fa2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 1000010151671542, guid: 294a9560e72fc0948a8080924228c061,
@@ -203,6 +205,30 @@ MonoBehaviour:
   - {x: 5, y: 1, z: 1}
   - {x: 10, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
+--- !u!114 &343032135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 343032132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64ada1fba6da41f40a728659f8e80c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spikePrefab: {fileID: 1000010345862176, guid: 8b3b7b4eff55f8d41924c2cc3da05c99,
+    type: 2}
+--- !u!114 &343032136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 343032132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81d82b53dc969bd4a9ab0f32d98ea3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1462532522
 GameObject:
   m_ObjectHideFlags: 0
