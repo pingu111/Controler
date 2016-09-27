@@ -9,6 +9,9 @@ public class MovePlayer : MonoBehaviour {
     // Is the player in contact wiith a plateform ?
     public bool isInContactWithPlatform;
 
+    // Is the player in contact wiith a wall ?
+    public bool isInContactWithWall;
+
     // Has the player already used his double jump ?
     private bool doubleJumpedUsed = false;
 
@@ -32,13 +35,20 @@ public class MovePlayer : MonoBehaviour {
             isInContactWithPlatform = true;
             doubleJumpedUsed = false;
         }
+        else if (collision.gameObject.tag == "WallJumpPlatform")
+        {
+            isInContactWithWall = true;
+            doubleJumpedUsed = false;
+        }
     }
 
     void OnCollisionExit(Collision collision)
     {
         Debug.Log(collision.gameObject + " left");
-        if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "WallJumpPlatform")
+        if (collision.gameObject.tag == "Platform")
             isInContactWithPlatform = false;
+        else if (collision.gameObject.tag == "WallJumpPlatform")
+            isInContactWithWall = false;
     }
 
     /// <summary>
@@ -47,7 +57,8 @@ public class MovePlayer : MonoBehaviour {
     void controls()
     {
         float xAxis = Input.GetAxis("XAxis");
-        this.gameObject.GetComponent<MyPhysics>().acceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().acceleration.y, 0);
+        if(!isInContactWithWall)
+            this.gameObject.GetComponent<MyPhysics>().acceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().acceleration.y, 0);
 
         if (Input.GetButtonDown("Jump") && (isInContactWithPlatform || !doubleJumpedUsed))
         {
