@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedX: 15
-  speedJumpY: 50
+  speedJumpY: 400
   isInContactWithPlatform: 0
   isInContactWithWall: 0
 --- !u!54 &1462532524
@@ -295,9 +295,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGivenAcceleration: {x: 0, y: 0}
-  gravity: 5
+  gravity: 8
   maxSpeed: 30
-  dragCoeff: 10
+  dragCoeff: 3
 --- !u!33 &1462532527
 MeshFilter:
   m_ObjectHideFlags: 0
