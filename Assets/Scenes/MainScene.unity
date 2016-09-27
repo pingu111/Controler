@@ -294,8 +294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb87b369c8ea8dd408ba020c318e3538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGivenSpeed: {x: 0, y: 0}
+  playerGivenAcceleration: {x: 0, y: 0}
   gravity: 5
+  maxSpeed: 30
+  dragCoeff: 10
 --- !u!33 &1462532527
 MeshFilter:
   m_ObjectHideFlags: 0
