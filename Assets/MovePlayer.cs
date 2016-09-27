@@ -67,5 +67,9 @@ public class MovePlayer : MonoBehaviour {
             if (!isInContactWithPlatform && !doubleJumpedUsed)
                 doubleJumpedUsed = true;
         }
+        else
+        {
+            GetComponent<MyPhysics>().playerGivenSpeed = new Vector3(GetComponent<MyPhysics>().playerGivenSpeed.x, 0, 0);
+        }
     }
 }

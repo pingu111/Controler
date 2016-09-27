@@ -15,24 +15,6 @@ public class MyPhysics : MonoBehaviour
     [SerializeField]
     float gravity;
 
-    /// <summary>
-    /// The friction of the air in this world
-    /// </summary>
-    [SerializeField]
-    float airFriction;
-
-    /// <summary>
-    /// The friction of the ground on this world
-    /// </summary>
-    [SerializeField]
-    float groundFriction;
-
-    /// <summary>
-    /// the mass of the object
-    /// </summary>
-    [SerializeField]
-    float mass;
-
 	// Use this for initialization
 	void Start ()
     {
@@ -40,52 +22,6 @@ public class MyPhysics : MonoBehaviour
 
         move = this.gameObject.GetComponent<MovePlayer>();
 	}
-
-
-
-
-    /// <summary>
-    /// reduit l'acceleration de value vers 0 (s'arrete a 0 si on le dépasse)
-    /// </summary>
-    /// <param name="value">la valeur du drag. réduction de l'acceleration</param>
-    private void drag(Vector2 value)
-    {
-        //change x value
-        if (speed.x > 0)
-        {
-            speed.x = speed.x - value.x;
-            if (speed.x < 0)
-            {
-                speed.x = 0;
-            }
-        }
-        else if(speed.x < 0)
-        {
-            speed.x = speed.x + value.x;
-            if (speed.x > 0)
-            {
-                speed.x = 0;
-            }
-        }
-            
-        //change y value
-        if (speed.y > 0)
-        {
-            speed.y = speed.y - value.y;
-            if (speed.y < 0)
-            {
-                speed.y = 0;
-            }
-        }
-        else if (speed.y < 0)
-        {
-            speed.y = speed.y + value.y;
-            if (speed.y > 0)
-            {
-                speed.y = 0;
-            }
-        }
-    }
 	
     /// <summary>
     /// calcul de la nouvelle acceleration en prenant compte de la gravité
@@ -100,28 +36,22 @@ public class MyPhysics : MonoBehaviour
     {
         speed = playerGivenSpeed;
 
-        bool isGravityAnabled = false;
-        //changements pour la friction
-        Vector2 friction = new Vector2(0,0);
+        bool isGravityEnabled = false;
         if(move.isInContactWithPlatform)
         {
             if (speed.y < 0)
                 speed.y = 0;
-            friction = new Vector2(groundFriction,0);
         }
         else if (move.isInContactWithWall)
         {
-            friction = new Vector2(groundFriction,0);
-            isGravityAnabled = true;
+            isGravityEnabled = true;
         }
-        else
+        else//no contact
         {
-            isGravityAnabled = true;
-            friction = new Vector2(airFriction, airFriction);
+            isGravityEnabled = true;
         }
-        drag(friction);
 
-        if(isGravityAnabled)
+        if(isGravityEnabled)
             gravityCalculator();
 
         Debug.Log("input :"+playerGivenSpeed);
