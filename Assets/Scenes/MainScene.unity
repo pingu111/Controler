@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692528, g: 0.49678677, b: 0.57508475, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678725, b: 0.5750856, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedX: 15
-  speedJumpY: 20
+  speedJumpY: 50
   isInContactWithPlatform: 0
   isInContactWithWall: 0
 --- !u!54 &1462532524
@@ -295,10 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGivenSpeed: {x: 0, y: 0}
-  gravity: 9.8
-  airFriction: 10
-  groundFriction: 100
-  mass: 10
+  gravity: 5
 --- !u!33 &1462532527
 MeshFilter:
   m_ObjectHideFlags: 0
