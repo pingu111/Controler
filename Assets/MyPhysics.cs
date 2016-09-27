@@ -101,6 +101,8 @@ public class MyPhysics : MonoBehaviour
         {
             if (acceleration.y < 0)
                 acceleration.y = 0;
+            if (speed.y < 0)
+                speed.y = 0;
             friction = speed*groundFriction;
         }
         else if (move.isInContactWithWall)
@@ -122,8 +124,8 @@ public class MyPhysics : MonoBehaviour
        // Debug.Log("calculus :"+acceleration);
         //update speed et position
         speed = speed + (acceleration * Time.deltaTime);
-       // Debug.Log("speed :"+speed);
+        Debug.Log("speed :"+speed);
         position = position + (speed * Time.deltaTime);
-        //Debug.Log("position :" + position);
+        Debug.Log("position :" + position);
 	}
 }
