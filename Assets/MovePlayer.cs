@@ -35,11 +35,13 @@ public class MovePlayer : MonoBehaviour {
         {
             isInContactWithPlatform = true;
             doubleJumpedUsed = false;
+            this.GetComponent<MyPhysics>().playerHasCollidePlatform(collision.transform);
         }
         else if (collision.gameObject.tag == "WallJumpPlatform")
         {
             isInContactWithWall = true;
             doubleJumpedUsed = false;
+            this.GetComponent<MyPhysics>().playerHasCollideWall(collision.transform);
         }
     }
 

@@ -7,6 +7,7 @@ public class MyPhysics : MonoBehaviour
     private Vector2 acceleration;
     private Vector2 speed;
     public Vector2 position { get; private set; }
+
     private MovePlayer move;
 
     /// <summary>
@@ -85,12 +86,22 @@ public class MyPhysics : MonoBehaviour
             gravityCalculator();
 
 
-        Debug.Log("input :"+playerGivenAcceleration);
+        //Debug.Log("input :"+playerGivenAcceleration);
         //update position
         speed = speed + (acceleration * Time.deltaTime);
         drag();
         position = position + (speed * Time.deltaTime);
-        Debug.Log("speed :" + speed);
-        Debug.Log("position :" + position);
+        //Debug.Log("speed :" + speed);
+        //Debug.Log("position :" + position);
 	}
+
+    public void playerHasCollideWall(Transform wallTranform)
+    {
+        ;
+    }
+
+    public void playerHasCollidePlatform(Transform platTranform)
+    {
+        ;
+    }
 }
