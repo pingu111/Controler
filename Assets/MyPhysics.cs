@@ -20,7 +20,10 @@ public class MyPhysics : MonoBehaviour
     private float maxSpeed;
 
     [SerializeField]
-    private float dragCoeff;
+    private float groundDragCoeff;
+
+    [SerializeField]
+    private float airDragCoeff;
 
 	// Use this for initialization
 	void Start ()
@@ -30,12 +33,12 @@ public class MyPhysics : MonoBehaviour
         move = this.gameObject.GetComponent<MovePlayer>();
 	}
 	
-    private void drag()
+    private void drag(float coeff)
     {
         if (speed.x > 0)
         {
             if(playerGivenAcceleration.x<=0)
-                speed.x -= dragCoeff;
+                speed.x -= coeff;
             if (speed.x < 0)
                 speed.x = 0;
             if (speed.x > maxSpeed)
@@ -44,7 +47,7 @@ public class MyPhysics : MonoBehaviour
         else if (speed.x < 0)
         {
             if(playerGivenAcceleration.x>=0)
-                speed.x += dragCoeff;
+                speed.x += coeff;
             if (speed.x > 0)
                 speed.x = 0;
             if (speed.x < -maxSpeed)
@@ -64,10 +67,12 @@ public class MyPhysics : MonoBehaviour
 	void Update ()
     {
         acceleration = playerGivenAcceleration;
-
+        //le coefficient de friction correspondant pour l'etat du player
+        float coeff = 0;
         bool isGravityEnabled = false;
         if(move.isInContactWithPlatform)
         {
+            coeff = groundDragCoeff;
             if (acceleration.y < 0)
                 acceleration.y = 0;
             if (speed.y < 0)
@@ -75,13 +80,15 @@ public class MyPhysics : MonoBehaviour
         }
         else if (move.isInContactWithWall)
         {
+            coeff = groundDragCoeff;
             isGravityEnabled = true;
         }
         else//no contact
         {
+            coeff = airDragCoeff;
             isGravityEnabled = true;
         }
-
+        Debug.Assert(coeff != 0);
         if(isGravityEnabled)
             gravityCalculator();
 
@@ -89,7 +96,7 @@ public class MyPhysics : MonoBehaviour
         //Debug.Log("input :"+playerGivenAcceleration);
         //update position
         speed = speed + (acceleration * Time.deltaTime);
-        drag();
+        drag(coeff);
         position = position + (speed * Time.deltaTime);
         //Debug.Log("speed :" + speed);
         //Debug.Log("position :" + position);
