@@ -43,6 +43,10 @@ public class MovePlayer : MonoBehaviour {
             doubleJumpedUsed = false;
             this.GetComponent<MyPhysics>().playerHasCollideWall(collision.transform);
         }
+        else if(collision.gameObject.tag == "Spike")
+        {
+            EventManager.raise(MyEventTypes.ONLOSE);
+        }
     }
 
     void OnCollisionExit(Collision collision)

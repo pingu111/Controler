@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpikeScript : MonoBehaviour {
+public class SpikeScript : MonoBehaviour
+{
+    public int idSpike = 0;
 
 	// Use this for initialization
-	void Start () {
-	}
-	
-    private void testEvent<T>()
+	void Start ()
     {
-        EventManager.addActionToEvent<int>(MyEventTypes.SPIKEOUT, getout);
-        EventManager.raise<int>(MyEventTypes.SPIKEOUT, 12);
+        subscribeEvent<int>();
+    }
+	
+    private void subscribeEvent<T>()
+    {
+        EventManager.addActionToEvent<int>(MyEventTypes.SPIKEOUT, raiseSpike);
     }
 
-    // Update is called once per frame
-    void Update () {
-	
-	}
-
-    public void getout(int i)
+    public void raiseSpike(int i)
     {
-        Debug.Log(i);
+        if (i == idSpike)
+            raiseThisSpike();
+    }
+
+    private void raiseThisSpike()
+    {
+        ;
     }
 }

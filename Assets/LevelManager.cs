@@ -6,14 +6,10 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// The prefab of the spikes
     /// </summary>
-    public GameObject spikePrefab;
 
 	// Use this for initialization
 	void Start ()
     {
-        EventManager.addActionToEvent<int>(MyEventTypes.SPIKEIN, test);
-
-        EventManager.raise<int>(MyEventTypes.SPIKEIN, 12);
 
     }
 
@@ -22,9 +18,4 @@ public class LevelManager : MonoBehaviour
     {
 	
 	}
-
-    void test(int a)
-    {
-        Debug.Log(a);
-    }
 }
