@@ -97,11 +97,45 @@ public class MyPhysics : MonoBehaviour
 
     public void playerHasCollideWall(Transform wallTranform)
     {
-        ;
+        float distanceX = ((wallTranform.GetComponent<Collider>().bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
+        float wallPosition = wallTranform.parent.position.x + wallTranform.position.x + wallTranform.GetComponent<BoxCollider>().center.x;
+
+        if (speed.x<0)//on collide le mur sur sa droite
+        {
+            speed.x = 0;
+            position = new Vector2(wallPosition + distanceX,position.y);
+        }
+        else if (speed.x>0)//on collide le mur sur sa gauche
+        {
+            speed.x = 0;
+            position = new Vector2(wallPosition - distanceX, position.y);
+        }
+        //si la speed est nul on a pas bouge
     }
 
     public void playerHasCollidePlatform(Transform platTranform)
     {
-        ;
+        float distanceY = ((platTranform.GetComponent<Collider>().bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
+        Debug.Log(distanceY);
+        float center = platTranform.GetComponent<BoxCollider>().center.y;
+        Debug.Log(center);
+        float positionPl = platTranform.parent.position.y + platTranform.position.y;
+        Debug.Log(positionPl);
+        float platformPosition = center + positionPl;
+        Debug.Log(platformPosition);
+
+        if (speed.y < 0)//on collide le mur sur le haut
+        {
+            speed.y = 0;
+            position = new Vector2(position.x, platformPosition + distanceY);
+        }
+        else if (speed.y > 0)//on collide le mur sur le bas
+        {
+            speed.y = 0;
+            position = new Vector2(position.x, platformPosition - distanceY);
+        }
+        Debug.Log(position);
+        //si la speed est nul on a pas bouge
+
     }
 }
