@@ -11,12 +11,20 @@ public class LevelManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        EventManager.addActionToEvent<int>(MyEventTypes.SPIKEIN, test);
+
+        EventManager.raise<int>(MyEventTypes.SPIKEIN, 12);
+
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
 	
 	}
+
+    void test(int a)
+    {
+        Debug.Log(a);
+    }
 }

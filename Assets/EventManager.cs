@@ -12,11 +12,14 @@ public enum MyEventTypes
     ONLOSE
 }
 
+public delegate void Callback();
+
+public delegate void Callback<T>(T arg);
+
+
+
 public static class EventManager
 {
-    public delegate void Callback();
-
-    public delegate void Callback<T>(T arg1);
 
     /// <summary>
     /// Dictionnary that translate the events to callbacks, methods to call 
@@ -43,7 +46,7 @@ public static class EventManager
     /// </summary>
     /// <param name="even">The event</param>
     /// <param name="method">The method</param>
-    public static void addActionToEvent(MyEventTypes even, Callback<T> method)
+    public static void addActionToEvent<T>(MyEventTypes even, Callback<T> method)
     {
         if (!dicoEventAction.ContainsKey(even))
         {
@@ -65,12 +68,12 @@ public static class EventManager
         }
     }
 
-    7 /// <summary>c
+    /// <summary>c
     /// Unsubscribe a method to an event
     /// </summary>
     /// <param name="even">The event to unsubscribe</param>
     /// <param name="method">The method to unsubscribe</param>
-    public static void removeActionFromEvent(MyEventTypes even, Callback<T> method)
+    public static void removeActionFromEvent<T>(MyEventTypes even, Callback<T> method)
     {
         if (dicoEventAction.ContainsKey(even))
         {
@@ -96,7 +99,9 @@ public static class EventManager
     /// Raise an event, so it will trigger all the subscribed methods
     /// </summary>
     /// <param name="eventToCall">The event to raise</param>
-    public static void raise(MyEventTypes eventToCall, int arg)
+    /// <param name="arg">The argument that we pass with the event</param>
+
+    public static void raise<T>(MyEventTypes eventToCall, T arg)
     {
         foreach (Delegate d in dicoEventAction[eventToCall])
         {
