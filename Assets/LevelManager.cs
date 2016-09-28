@@ -3,13 +3,12 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour
 {
-    /// <summary>
-    /// The prefab of the spikes
-    /// </summary>
+    public GameObject player;
 
 	// Use this for initialization
 	void Start ()
     {
+        EventManager.addActionToEvent(MyEventTypes.ONLOSE, onLose);
 
     }
 
@@ -18,4 +17,10 @@ public class LevelManager : MonoBehaviour
     {
 	
 	}
+
+    void onLose()
+    {
+        Debug.Log("Aha loser");
+        Destroy(player);
+    }
 }

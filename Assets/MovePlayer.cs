@@ -26,6 +26,13 @@ public class MovePlayer : MonoBehaviour {
     {
         controls();
         this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;
+
+        Vector3 cameraLimits = Camera.main.WorldToViewportPoint(this.gameObject.transform.position);
+        if (cameraLimits.x < 0 || cameraLimits.x > 1f ||
+            cameraLimits.y < 0 || cameraLimits.y > 1f)
+        {
+            EventManager.raise(MyEventTypes.ONLOSE);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -35,13 +42,19 @@ public class MovePlayer : MonoBehaviour {
         {
             isInContactWithPlatform = true;
             doubleJumpedUsed = false;
-            this.GetComponent<MyPhysics>().playerHasCollidePlatform(collision.transform);
+            if (collision.collider.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasCollidePlatform((BoxCollider)collision.collider);
+            else
+                Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
         }
         else if (collision.gameObject.tag == "WallJumpPlatform")
         {
             isInContactWithWall = true;
             doubleJumpedUsed = false;
-            this.GetComponent<MyPhysics>().playerHasCollideWall(collision.transform);
+            if (collision.collider.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasCollideWall((BoxCollider)collision.collider);
+            else
+                Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
         }
         else if(collision.gameObject.tag == "Spike")
         {

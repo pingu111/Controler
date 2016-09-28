@@ -95,10 +95,10 @@ public class MyPhysics : MonoBehaviour
         //Debug.Log("position :" + position);
 	}
 
-    public void playerHasCollideWall(Transform wallTranform)
+    public void playerHasCollideWall(BoxCollider wallTranform)
     {
-        float distanceX = ((wallTranform.GetComponent<Collider>().bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
-        float wallPosition = wallTranform.parent.position.x + wallTranform.position.x + wallTranform.GetComponent<BoxCollider>().center.x;
+        float distanceX = ((wallTranform.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
+        float wallPosition = wallTranform.transform.parent.position.x + wallTranform.transform.position.x + wallTranform.center.x;
 
         if (speed.x<0)//on collide le mur sur sa droite
         {
@@ -113,13 +113,13 @@ public class MyPhysics : MonoBehaviour
         //si la speed est nul on a pas bouge
     }
 
-    public void playerHasCollidePlatform(Transform platTranform)
+    public void playerHasCollidePlatform(BoxCollider platTranform)
     {
-        float distanceY = ((platTranform.GetComponent<Collider>().bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
+        float distanceY = ((platTranform.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
         Debug.Log(distanceY);
-        float center = platTranform.GetComponent<BoxCollider>().center.y;
+        float center = platTranform.center.y;
         Debug.Log(center);
-        float positionPl = platTranform.parent.position.y + platTranform.position.y;
+        float positionPl = platTranform.transform.parent.position.y + platTranform.transform.position.y;
         Debug.Log(positionPl);
         float platformPosition = center + positionPl;
         Debug.Log(platformPosition);
