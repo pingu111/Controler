@@ -11,7 +11,7 @@ public class SpikeScript : MonoBehaviour
     /// <summary>
     /// Must be the spike in mouvement to out ?
     /// </summary>
-    private bool mustBeInMovementOut = true;
+    private bool mustBeInMovementOut = false;
 
     /// <summary>
     /// Must be the spike in mouvement to in ?
@@ -28,29 +28,37 @@ public class SpikeScript : MonoBehaviour
     /// </summary>
     private float speed = 0.1f;
 
+    /// <summary>
+    /// The number of seconds before the spike go up
+    /// </summary>
+    public float secondsBeforeUp = 2.5f;
+
+    private float timeBeginningUp = 0;
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
+        this.gameObject.GetComponent<Renderer>().material.color = Color.green;
+
         subscribeEvent<int>();
-        //EventManager.raise<int>(MyEventTypes.SPIKEOUT, 10);
     }
 
     void Update()
     {
-        if (mustBeInMovementOut)
+        if (mustBeInMovementOut && Time.time > (timeBeginningUp + secondsBeforeUp))
         {
+            //Debug.Log(Time.time + " " + timeBeginningUp + " " + secondsBeforeUp);
+
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
 
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
-
-            if (rotation == 90 && posSpikeCam.x < translateInCamera)
-                this.transform.Translate(new Vector3(speed, 0, 0));
-            else if (rotation == -90 && posSpikeCam.x > (1 - translateInCamera))
-                this.transform.Translate(new Vector3(-speed, 0, 0));
+            if (rotation > 0 && posSpikeCam.x < translateInCamera)
+                this.transform.Translate(new Vector3(0, -speed, 0));
+            else if (rotation < 0 && posSpikeCam.x > (1 - translateInCamera))
+                this.transform.Translate(new Vector3(0, -speed, 0));
             else if (rotation == 0 && posSpikeCam.y < translateInCamera)
                 this.transform.Translate(new Vector3(0, speed, 0));
-
         }
         else if (mustBeInMovementIn)
         {
@@ -60,9 +68,9 @@ public class SpikeScript : MonoBehaviour
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
 
             if (rotation == 90 && posSpikeCam.x > -0.1f)
-                this.transform.Translate(new Vector3(-speed, 0, 0));
+                this.transform.Translate(new Vector3(0, speed, 0));
             else if (rotation == -90 && posSpikeCam.x < 1.1f)
-                this.transform.Translate(new Vector3(speed, 0, 0));
+                this.transform.Translate(new Vector3(0, speed, 0));
             else if (rotation == 0 && posSpikeCam.y > -0.1f)
                 this.transform.Translate(new Vector3(0, -speed, 0));
         }
@@ -76,19 +84,21 @@ public class SpikeScript : MonoBehaviour
 
     public void raiseSpike(int i)
     {
-        Debug.Log(i);
         if (i == idSpike)
         {
-            raiseThisSpike();
+            raiseSpike();
         }
     }
 
-    private IEnumerator raiseThisSpike()
+    private void raiseSpike()
     {
+        Debug.Log(timeBeginningUp);
+
+        timeBeginningUp = Time.time;
+        Debug.Log(timeBeginningUp);
+
         this.gameObject.GetComponent<Renderer>().material.color = Color.red;
         Debug.Log(this.gameObject.GetComponent<Renderer>().material.color);
-
-        yield return new WaitForSeconds(10);
         mustBeInMovementOut = true;
     }
 

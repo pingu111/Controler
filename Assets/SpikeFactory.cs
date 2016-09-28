@@ -49,7 +49,7 @@ public class SpikeFactory : MonoBehaviour
         {
             float delta =(float)( 1.0f / (float)(nbSpikesGround + 1));
             float posX = delta + i * delta;
-            posSpike.Add(new Vector3(posX, -0.1f, 0));
+            posSpike.Add(new Vector3(posX, -0.08f, 0));
 
             scaleSpikes.Add(new Vector3(0.5f, 2, 1));
             orientationsSpikes.Add(new Vector3(0,0,0));
@@ -59,7 +59,7 @@ public class SpikeFactory : MonoBehaviour
         {
             float delta = (float)(1.0f / (float)(nbSpikesWall + 1));
             float posY = delta + i * delta;
-            posSpike.Add(new Vector3(-0.1f, posY, 0));
+            posSpike.Add(new Vector3(-0.05f, posY, 0));
 
             scaleSpikes.Add(new Vector3(0.5f, 2, 1));
             orientationsSpikes.Add(new Vector3(0, 0, 90));
@@ -69,7 +69,7 @@ public class SpikeFactory : MonoBehaviour
         {
             float delta = (float)(1.0f / (float)(nbSpikesWall + 1));
             float posY = delta + i * delta;
-            posSpike.Add(new Vector3(1.1f, posY, 0));
+            posSpike.Add(new Vector3(1.05f, posY, 0));
 
             scaleSpikes.Add(new Vector3(0.5f, 2, 1));
             orientationsSpikes.Add(new Vector3(0, 0, -90));
