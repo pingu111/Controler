@@ -30,7 +30,7 @@ public class MovePlayer : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject + " entered");
+        //Debug.Log(collision.gameObject + " entered");
         if (collision.gameObject.tag == "Platform")
         {
             isInContactWithPlatform = true;
@@ -51,7 +51,7 @@ public class MovePlayer : MonoBehaviour {
 
     void OnCollisionExit(Collision collision)
     {
-        Debug.Log(collision.gameObject + " left");
+        //Debug.Log(collision.gameObject + " left");
         if (collision.gameObject.tag == "Platform")
             isInContactWithPlatform = false;
         else if (collision.gameObject.tag == "WallJumpPlatform")
