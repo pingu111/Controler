@@ -46,14 +46,12 @@ public class LevelFactory : MonoBehaviour
         ground.transform.localScale = new Vector3(100, 1, 1);
         ground.gameObject.name = "Ground";
 
-
         GameObject roof = Instantiate(platformPrefab);
         roof.transform.parent = this.transform;
         Vector3 posRoof = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         roof.transform.position = new Vector3(0, posRoof.y - ground.GetComponent<Collider>().bounds.size.y / 2, 0);
         roof.transform.localScale = new Vector3(100, 1, 1);
         roof.gameObject.name = "Roof";
-
 
         GameObject leftWall = Instantiate(platformPrefab);
         leftWall.transform.parent = this.transform;
@@ -63,7 +61,6 @@ public class LevelFactory : MonoBehaviour
         leftWall.transform.Rotate(new Vector3(0, 0, 90));
         leftWall.gameObject.name = "LeftWall";
 
-
         GameObject rightWall = Instantiate(platformPrefab);
         rightWall.transform.parent = this.transform;
         Vector3 posRightWall = Camera.main.ViewportToWorldPoint(new Vector3(1f, 0.5f, 0));
@@ -71,7 +68,6 @@ public class LevelFactory : MonoBehaviour
         rightWall.transform.localScale = new Vector3(100, 1, 1);
         rightWall.transform.Rotate(new Vector3(0, 0, -90));
         rightWall.gameObject.name = "RightWall";
-
     }
 
     /// <summary>
