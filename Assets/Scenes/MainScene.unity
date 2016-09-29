@@ -338,7 +338,8 @@ MonoBehaviour:
   playerGivenAcceleration: {x: 0, y: 0}
   gravity: 15
   maxSpeed: 30
-  dragCoeff: 0.2
+  groundDragCoeff: 1
+  airDragCoeff: 1
 --- !u!33 &1462532527
 MeshFilter:
   m_ObjectHideFlags: 0
