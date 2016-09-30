@@ -403,6 +403,8 @@ MonoBehaviour:
     type: 2}
   nbSpikesGround: 20
   nbSpikesWall: 30
+  nbGroupGround: 4
+  nbGroupWall: 5
 --- !u!4 &2049870996
 Transform:
   m_ObjectHideFlags: 0
