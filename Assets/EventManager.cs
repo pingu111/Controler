@@ -9,6 +9,8 @@ public enum MyEventTypes
 {
     SPIKEIN,
     SPIKEOUT,
+    GROUPSPIKEOUT,
+    GROUPSPIKEIN,
     ONVICTORY,
     ONLOSE
 }

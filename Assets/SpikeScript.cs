@@ -9,6 +9,11 @@ public class SpikeScript : MonoBehaviour
     public int idSpike = 0;
 
     /// <summary>
+    /// ID of the group of spikes to raise
+    /// </summary>
+    public int idGroupSpike = 0;
+
+    /// <summary>
     /// Must be the spike in mouvement to out ?
     /// </summary>
     private bool mustBeInMovementOut = false;
@@ -33,6 +38,9 @@ public class SpikeScript : MonoBehaviour
     /// </summary>
     public float secondsBeforeUp = 2.5f;
 
+    /// <summary>
+    /// Time when the spike begin to go up
+    /// </summary>
     private float timeBeginningUp = 0;
 
     // Use this for initialization
@@ -80,11 +88,21 @@ public class SpikeScript : MonoBehaviour
     {
         EventManager.addActionToEvent<int>(MyEventTypes.SPIKEOUT, raiseSpike);
         EventManager.addActionToEvent<int>(MyEventTypes.SPIKEIN, retractSpike);
+        EventManager.addActionToEvent<int>(MyEventTypes.GROUPSPIKEOUT, raiseGroupSpike);
+        EventManager.addActionToEvent<int>(MyEventTypes.GROUPSPIKEIN, retractGroupSpike);
     }
 
     public void raiseSpike(int i)
     {
         if (i == idSpike)
+        {
+            raiseSpike();
+        }
+    }
+
+    public void raiseGroupSpike(int i)
+    {
+        if (i == idGroupSpike)
         {
             raiseSpike();
         }
@@ -104,6 +122,12 @@ public class SpikeScript : MonoBehaviour
     public void retractSpike(int i)
     {
         if (i == idSpike)
+            retractThisSpike();
+    }
+
+    public void retractGroupSpike(int i)
+    {
+        if (i == idGroupSpike)
             retractThisSpike();
     }
 
