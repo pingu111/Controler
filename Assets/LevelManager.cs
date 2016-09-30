@@ -1,9 +1,24 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+
+public enum TypeScriptedEvent
+{
+    SPIKEIN,
+    SPIKEOUT,
+    TEXT
+}
 
 public class LevelManager : MonoBehaviour
 {
+    /// <summary>
+    /// The player to destroy if game over
+    /// </summary>
     public GameObject player;
+
+    /// <summary>
+    /// List of the events that we'll raise during runtime
+    /// </summary>
+    public List<ScriptedEvent> listEvenets = new List<ScriptedEvent>();
 
 	// Use this for initialization
 	void Start ()
