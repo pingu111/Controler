@@ -92,14 +92,13 @@ public class SpikeScript : MonoBehaviour
 
     private void raiseSpike()
     {
-        Debug.Log(timeBeginningUp);
-
         timeBeginningUp = Time.time;
-        Debug.Log(timeBeginningUp);
 
         this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-        Debug.Log(this.gameObject.GetComponent<Renderer>().material.color);
+
         mustBeInMovementOut = true;
+        mustBeInMovementIn = false;
+
     }
 
     public void retractSpike(int i)
@@ -112,6 +111,7 @@ public class SpikeScript : MonoBehaviour
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
         mustBeInMovementIn = true;
+        mustBeInMovementOut = false;
     }
 
 }

@@ -26,7 +26,7 @@ public class ScriptedEvent
     /// <param name="__type"></param>
     /// <param name="__time"></param>
     /// <param name="__id"></param>
-    ScriptedEvent(TypeScriptedEvent __type, float __time, int __id)
+    public ScriptedEvent(TypeScriptedEvent __type, float __time, int __id)
     {
         this.typeOfEvent = __type;
         this.timeToLaunchEvent = __time;
