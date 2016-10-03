@@ -55,18 +55,17 @@ public class LevelFactory : MonoBehaviour
 
         GameObject leftWall = Instantiate(platformPrefab);
         leftWall.transform.parent = this.transform;
-        leftWall.transform.localScale = new Vector3(120, 1, 1);
+        leftWall.transform.localScale = new Vector3(1, 120, 1);
         Vector3 posLeftWall = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, 0));
-        leftWall.transform.position = new Vector3(posLeftWall.x + leftWall.GetComponent<Collider>().bounds.size.y / 2, 0 , 0);
-        leftWall.transform.Rotate(new Vector3(0, 0, 90));
+        leftWall.transform.position = new Vector3(posLeftWall.x + leftWall.GetComponent<Collider>().bounds.size.x / 2, 0 , 0);
         leftWall.gameObject.name = "LeftWall";
 
         GameObject rightWall = Instantiate(platformPrefab);
         rightWall.transform.parent = this.transform;
-        rightWall.transform.localScale = new Vector3(120, 1, 1);
+        rightWall.transform.localScale = new Vector3(1, 120, 1);
         Vector3 posRightWall = Camera.main.ViewportToWorldPoint(new Vector3(1f, 0.5f, 0));
-        rightWall.transform.position = new Vector3(posRightWall.x - rightWall.GetComponent<Collider>().bounds.size.y / 2, 0, 0);
-        rightWall.transform.Rotate(new Vector3(0, 0, -90));
+        rightWall.transform.position = new Vector3(posRightWall.x - rightWall.GetComponent<Collider>().bounds.size.x / 2, 0, 0);
+
         rightWall.gameObject.name = "RightWall";
     }
 

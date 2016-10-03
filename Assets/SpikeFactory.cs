@@ -75,11 +75,9 @@ public class SpikeFactory : MonoBehaviour
             orientationsSpikes.Add(new Vector3(0,0,0));
 
             int idGroup = (int)(i / (nbSpikesGround / nbGroupGround)) + 1;
-            Debug.Log(i + " " + idGroup);
-
             idGroupSpikes.Add(idGroup);
         }
-        Debug.Log("------------------------------------------");
+       // Debug.Log("------------------------------------------");
         //30
         for (int i = 0; i < nbSpikesWall; ++i)
         {
@@ -91,10 +89,9 @@ public class SpikeFactory : MonoBehaviour
             orientationsSpikes.Add(new Vector3(0, 0, 90));
 
             int idGroup = (int)(i / (nbSpikesWall / nbGroupWall)) + 1 + nbGroupGround;
-            Debug.Log(i + " " + idGroup);
             idGroupSpikes.Add(idGroup);
         }
-        Debug.Log("------------------------------------------");
+        //Debug.Log("------------------------------------------");
         //30
         for (int i = 0; i < nbSpikesWall; i++)
         {
@@ -106,11 +103,8 @@ public class SpikeFactory : MonoBehaviour
             orientationsSpikes.Add(new Vector3(0, 0, -90));
 
             int idGroup = (int)(i / (nbSpikesWall / nbGroupWall)) + 1 + nbGroupGround + nbGroupWall;
-            Debug.Log(i + " " + idGroup);
-
             idGroupSpikes.Add(idGroup);
         }
-
         initSpikes();
 	}
 	

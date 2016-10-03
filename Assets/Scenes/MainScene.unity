@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26bb6eb9232e5ec469f797755272fa2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 1000011400540030, guid: 294a9560e72fc0948a8080924228c061,
+  platformPrefab: {fileID: 1000011866770178, guid: b95be7602a54a1142b60044513f22a5b,
     type: 2}
   posPlatforms:
   - {x: 0.5, y: 0.2, z: 0}
