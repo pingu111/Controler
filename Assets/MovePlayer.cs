@@ -35,15 +35,16 @@ public class MovePlayer : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+
+    void OnTriggerEnter(Collider collision)
     {
-        //Debug.Log(collision.gameObject + " entered");
+        Debug.Log(collision.gameObject + " entered");
         if (collision.gameObject.tag == "Platform")
         {
             isInContactWithPlatform = true;
             doubleJumpedUsed = false;
-            if (collision.collider.GetType() == typeof(BoxCollider))
-                this.GetComponent<MyPhysics>().playerHasCollidePlatform((BoxCollider)collision.collider);
+            if (collision.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasCollidePlatform((BoxCollider)collision);
             else
                 Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
         }
@@ -51,20 +52,20 @@ public class MovePlayer : MonoBehaviour {
         {
             isInContactWithWall = true;
             doubleJumpedUsed = false;
-            if (collision.collider.GetType() == typeof(BoxCollider))
-                this.GetComponent<MyPhysics>().playerHasCollideWall((BoxCollider)collision.collider);
+            if (collision.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasCollideWall((BoxCollider)collision);
             else
                 Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
         }
-        else if(collision.gameObject.tag == "Spike")
+        else if (collision.gameObject.tag == "Spike")
         {
             EventManager.raise(MyEventTypes.ONLOSE);
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    void OnTriggerExit(Collider collision)
     {
-        //Debug.Log(collision.gameObject + " left");
+        Debug.Log(collision.gameObject + " left");
         if (collision.gameObject.tag == "Platform")
             isInContactWithPlatform = false;
         else if (collision.gameObject.tag == "WallJumpPlatform")
