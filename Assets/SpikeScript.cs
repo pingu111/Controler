@@ -43,10 +43,22 @@ public class SpikeScript : MonoBehaviour
     /// </summary>
     private float timeBeginningUp = 0;
 
+    /// <summary>
+    /// Position of the spike when in the ground
+    /// </summary>
+    private float posWhenIn = 0;
+
     // Use this for initialization
     void Start()
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.green;
+
+        float rotation = this.transform.rotation.z;
+        Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
+        if (rotation > 0 || rotation < 0)
+            posWhenIn = posSpikeCam.x;
+        else if (rotation == 0)
+            posWhenIn = posSpikeCam.y;
 
         subscribeEvent<int>();
     }
@@ -75,11 +87,11 @@ public class SpikeScript : MonoBehaviour
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
 
-            if (rotation > 0 && posSpikeCam.x >= -0.05f)
+            if (rotation > 0 && posSpikeCam.x >= posWhenIn)
                 this.transform.Translate(new Vector3(0, speed, 0));
-            else if (rotation < 0 && posSpikeCam.x <= 1.05f)
+            else if (rotation < 0 && posSpikeCam.x <= posWhenIn)
                 this.transform.Translate(new Vector3(0, speed, 0));
-            else if (rotation == 0 && posSpikeCam.y >= -0.08f)
+            else if (rotation == 0 && posSpikeCam.y >= posWhenIn)
                 this.transform.Translate(new Vector3(0, -speed, 0));
         }
     }
