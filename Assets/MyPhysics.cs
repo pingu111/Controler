@@ -105,7 +105,7 @@ public class MyPhysics : MonoBehaviour
     public void playerHasCollideWall(BoxCollider wallTranform)
     {
         float distanceX = ((wallTranform.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
-        float wallPosition = wallTranform.transform.parent.position.x + wallTranform.transform.position.x + wallTranform.center.x;
+        float wallPosition = wallTranform.transform.position.x + wallTranform.center.x;
 
         if (speed.x<0)//on collide le mur sur sa droite
         {
