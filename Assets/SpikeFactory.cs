@@ -64,42 +64,39 @@ public class SpikeFactory : MonoBehaviour
         orientationsSpikes = new List<Vector3>();
         idGroupSpikes = new List<int>();
 
-        //20
         for (int i = 0; i < nbSpikesGround; i++)
         {
             float delta =(float)( 1.0f / (float)(nbSpikesGround + 1));
             float posX = delta + i * delta;
-            posSpike.Add(new Vector3(posX, -0.08f, 0));
+            posSpike.Add(new Vector3(posX, -0.185f, 0));
 
-            scaleSpikes.Add(new Vector3(0.5f, 2, 1));
+            scaleSpikes.Add(new Vector3(0.5f, 4, 1));
             orientationsSpikes.Add(new Vector3(0,0,0));
 
             int idGroup = (int)(i / (nbSpikesGround / nbGroupGround)) + 1;
             idGroupSpikes.Add(idGroup);
         }
-       // Debug.Log("------------------------------------------");
-        //30
+
         for (int i = 0; i < nbSpikesWall; ++i)
         {
             float delta = (float)(1.0f / (float)(nbSpikesWall + 1));
             float posY = delta + i * delta;
-            posSpike.Add(new Vector3(-0.05f, posY, 0));
+            posSpike.Add(new Vector3(-0.105f, posY, 0));
 
-            scaleSpikes.Add(new Vector3(0.5f, 2, 1));
+            scaleSpikes.Add(new Vector3(0.5f, 4, 1));
             orientationsSpikes.Add(new Vector3(0, 0, 90));
 
             int idGroup = (int)(i / (nbSpikesWall / nbGroupWall)) + 1 + nbGroupGround;
             idGroupSpikes.Add(idGroup);
         }
-        //Debug.Log("------------------------------------------");
-        //30
+
         for (int i = 0; i < nbSpikesWall; i++)
         {
             float delta = (float)(1.0f / (float)(nbSpikesWall + 1));
             float posY = delta + i * delta;
-            posSpike.Add(new Vector3(1.05f, posY, 0));
+            posSpike.Add(new Vector3(1.105f, posY, 0));
 
-            scaleSpikes.Add(new Vector3(0.5f, 2, 1));
+            scaleSpikes.Add(new Vector3(0.5f, 4, 1));
             orientationsSpikes.Add(new Vector3(0, 0, -90));
 
             int idGroup = (int)(i / (nbSpikesWall / nbGroupWall)) + 1 + nbGroupGround + nbGroupWall;
