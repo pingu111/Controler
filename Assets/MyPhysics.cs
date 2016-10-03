@@ -122,13 +122,17 @@ public class MyPhysics : MonoBehaviour
 
     public void playerHasCollidePlatform(BoxCollider platTranform)
     {
+        //distance entre le collider et le joueur
         float distanceY = ((platTranform.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
         Debug.Log(distanceY);
+        //la position du collider par rapport a l'object
         float center = platTranform.center.y;
         Debug.Log(center);
-        float positionPl = platTranform.transform.parent.position.y + platTranform.transform.position.y;
-        Debug.Log(positionPl);
-        float platformPosition = center + positionPl;
+        //la position de l'object portant le collider
+        float positionCollider = platTranform.transform.position.y;
+        Debug.Log(positionCollider);
+        //position du collider
+        float platformPosition = center + positionCollider;
         Debug.Log(platformPosition);
 
         if (speed.y < 0)//on collide le mur sur le haut
