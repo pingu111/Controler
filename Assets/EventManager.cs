@@ -12,7 +12,9 @@ public enum MyEventTypes
     GROUPSPIKEOUT,
     GROUPSPIKEIN,
     ONVICTORY,
-    ONLOSE
+    ONLOSE,
+    SCOREADD,
+    TEXTCHANGE
 }
 
 public delegate void Callback();
