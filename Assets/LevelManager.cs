@@ -54,6 +54,11 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private int nbSpikeToOut = 0;
 
+    /// <summary>
+    /// Number of spikes that can go Out at the same time (increase with difficulty)
+    /// </summary>
+    private int nbSpikeSameTime = 1;
+
     // Use this for initialization
     void Start ()
     {
@@ -62,6 +67,7 @@ public class LevelManager : MonoBehaviour
 
         nbSpikes = (spikeFactory.GetComponent<SpikeFactory>().nbSpikesGround + 2*spikeFactory.GetComponent<SpikeFactory>().nbSpikesWall);
         nbGroupSpikes = (spikeFactory.GetComponent<SpikeFactory>().nbGroupGround + 2 * spikeFactory.GetComponent<SpikeFactory>().nbGroupWall);
+        nbSpikeSameTime = 1;
     }
 
     // Update is called once per frame
@@ -105,15 +111,15 @@ public class LevelManager : MonoBehaviour
             }
         }
         // If we don't have any more spikes to lever
-        if(nbSpikeToOut == 0)
+        if (nbSpikeToOut < nbSpikeSameTime)
         {
             float nextTime = ((Time.time - timeBeginning) + cooldown);
             int randomId = 0;
 
-            if (Random.Range(0,100) < 80)
+            if (Random.Range(0, 100) < 80)
             {
-                randomId =(int)Random.Range(1, nbGroupSpikes - 0.01f);
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, Time.time+cooldown, randomId));
+                randomId = (int)Random.Range(1, nbGroupSpikes - 0.01f);
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, Time.time + cooldown, randomId));
                 nbSpikeToOut++;
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, Time.time + cooldown + 4, randomId));
             }
@@ -125,6 +131,11 @@ public class LevelManager : MonoBehaviour
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, Time.time + cooldown + 4, randomId));
             }
             cooldown *= 0.95f;
+
+            if (Random.Range(0, 100) > 80)
+            {
+                nbSpikeSameTime++;
+            }
         }
     }
 
