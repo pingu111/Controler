@@ -52,7 +52,8 @@ public class MovePlayer : MonoBehaviour
                 isInContactWithPlatform = true;
                 doubleJumpedUsed = false;
             }
-            else if (collision.gameObject.tag == "WallJumpPlatform")
+            else if (collision.gameObject.tag == "RightWallPlatform"
+                || collision.gameObject.tag == "LeftWallPlatform")
             {
                 isInContactWithWall = true;
                 doubleJumpedUsed = false;
@@ -71,7 +72,8 @@ public class MovePlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Platform")
                 isInContactWithPlatform = false;
-        else if (collision.gameObject.tag == "WallJumpPlatform")
+        else if (collision.gameObject.tag == "RightWallPlatform"
+            || collision.gameObject.tag == "LeftWallPlatform")
                 isInContactWithWall = false;
         this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
     }
