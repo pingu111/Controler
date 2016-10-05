@@ -45,6 +45,16 @@ public class LevelFactory : MonoBehaviour
         Vector3 posGround = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
         ground.transform.position = new Vector3(0, posGround.y + ground.GetComponent<Collider>().bounds.size.y / 2, 0);
         ground.gameObject.name = "Ground";
+        foreach(Transform child in ground.transform)
+        {
+            Debug.Log(child.gameObject);
+            Debug.Log(child.gameObject.tag);
+
+            if (child.gameObject.tag != "Platform")
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         GameObject roof = Instantiate(platformPrefab);
         roof.transform.parent = this.transform;
@@ -52,6 +62,15 @@ public class LevelFactory : MonoBehaviour
         Vector3 posRoof = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         roof.transform.position = new Vector3(0, posRoof.y - ground.GetComponent<Collider>().bounds.size.y / 2, 0);
         roof.gameObject.name = "Roof";
+        foreach (Transform child in roof.transform)
+        {
+            Debug.Log(child.gameObject);
+            Debug.Log(child.gameObject.tag);
+            if (child.gameObject.tag != "Roof")
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         GameObject leftWall = Instantiate(platformPrefab);
         leftWall.transform.parent = this.transform;
@@ -59,14 +78,29 @@ public class LevelFactory : MonoBehaviour
         Vector3 posLeftWall = Camera.main.ViewportToWorldPoint(new Vector3(0, 0.5f, 0));
         leftWall.transform.position = new Vector3(posLeftWall.x + leftWall.GetComponent<Collider>().bounds.size.x / 2, 0 , 0);
         leftWall.gameObject.name = "LeftWall";
+        foreach (Transform child in leftWall.transform)
+        {
+            Debug.Log(child.gameObject);
+            Debug.Log(child.gameObject.tag);
+            if (child.gameObject.tag != "LeftWallPlatform")
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
         GameObject rightWall = Instantiate(platformPrefab);
         rightWall.transform.parent = this.transform;
         rightWall.transform.localScale = new Vector3(1, 120, 1);
         Vector3 posRightWall = Camera.main.ViewportToWorldPoint(new Vector3(1f, 0.5f, 0));
         rightWall.transform.position = new Vector3(posRightWall.x - rightWall.GetComponent<Collider>().bounds.size.x / 2, 0, 0);
-
         rightWall.gameObject.name = "RightWall";
+        foreach (Transform child in rightWall.transform)
+        {
+            if (child.gameObject.tag != "RightWallPlatform")
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 
     /// <summary>
@@ -85,6 +119,14 @@ public class LevelFactory : MonoBehaviour
             Vector3 posPlatform = Camera.main.ViewportToWorldPoint(pos);
             platform.transform.position = new Vector3(posPlatform.x, posPlatform.y, 0);
             platform.transform.localScale = scale;
+
+            foreach (Transform child in platform.transform)
+            {
+                if (child.gameObject.tag != "Platform")
+                {
+                    Destroy(child.gameObject);
+                }
+            }
         }
     }
 
