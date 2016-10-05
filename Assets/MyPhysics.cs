@@ -157,37 +157,24 @@ public class MyPhysics : MonoBehaviour
 
     public void playerHasCollided(BoxCollider collider)
     {
-        if (collider.CompareTag("Wall"))
+        if (collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL)))
         {
-            //wall collision
-
-            //TODO gerer le nouveau boolean
             float distanceX = ((collider.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
             float wallPosition = collider.transform.position.x + collider.center.x;
-
-            if (speed.x < 0)//on collide le mur sur sa droite
-            {
-                speed.x = 0;
-                position = new Vector2(wallPosition + distanceX, position.y);
-                isInContactWithLeftWall = true;
-            }
-            else if (speed.x > 0)//on collide le mur sur sa gauche
-            {
-                speed.x = 0;
-                position = new Vector2(wallPosition - distanceX, position.y);
-                isInContactWithRightWall = true;
-            }
-            //si la speed est nul on a pas bouge
+            speed.x = 0;
+            position = new Vector2(wallPosition + distanceX, position.y);
+            isInContactWithLeftWall = true;
         }
-        else if (collider.CompareTag("platform"))
+        else if (collider.CompareTag(StringEnum.GetStringValue(Tags.RIGHT_WALL)))
         {
-
-
-            //plateform collision
-
-
-            //TODO gerer le nouveau bool
-            //distance entre le collider et le joueur
+            float distanceX = ((collider.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
+            float wallPosition = collider.transform.position.x + collider.center.x;
+            speed.x = 0;
+            position = new Vector2(wallPosition - distanceX, position.y);
+            isInContactWithRightWall = true;
+        }
+        else if (collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM)))
+        {
             float distanceY = ((collider.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
             Debug.Log(distanceY);
             //la position du collider par rapport a l'object
@@ -199,36 +186,43 @@ public class MyPhysics : MonoBehaviour
             //position du collider
             float platformPosition = center + positionCollider;
             Debug.Log(platformPosition);
-
-            if (speed.y < 0)//on collide le mur sur le haut
-            {
-                speed.y = 0;
-                position = new Vector2(position.x, platformPosition + distanceY);
-                isInContactWithPlateform = true;
-            }
-            else if (speed.y > 0)//on collide le mur sur le bas
-            {
-                speed.y = 0;
-                position = new Vector2(position.x, platformPosition - distanceY);
-                isInContactWithRoof = true;
-            }
-            Debug.Log(position);
-            //si la speed est nul on a pas bouge
+            speed.y = 0;
+            position = new Vector2(position.x, platformPosition + distanceY);
+            isInContactWithPlateform = true;
+        }
+        else if(collider.CompareTag(StringEnum.GetStringValue(Tags.ROOF)))
+        {
+            float distanceY = ((collider.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
+            //la position du collider par rapport a l'object
+            float center = collider.center.y;
+            //la position de l'object portant le collider
+            float positionCollider = collider.transform.position.y;
+            //position du collider
+            float platformPosition = center + positionCollider;
+            speed.y = 0;
+            position = new Vector2(position.x, platformPosition - distanceY);
+            isInContactWithRoof = true;
         }
 
     }
 
     public void playerHasExitCollider(BoxCollider collider)
     {
-        if (collider.CompareTag("Wall"))
+        if (collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL)))
         {
             isInContactWithLeftWall = false;
+        }
+        else if(collider.CompareTag(StringEnum.GetStringValue(Tags.RIGHT_WALL)))
+        { 
             isInContactWithRightWall = false;
         }
-        if (collider.CompareTag("Platform"))
+        else if (collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM)))
+        {
+            isInContactWithPlateform = false;
+        }
+        else if(collider.CompareTag(StringEnum.GetStringValue(Tags.ROOF)))
         {
             isInContactWithRoof = false;
-            isInContactWithPlateform = false;
         }
     }
 }
