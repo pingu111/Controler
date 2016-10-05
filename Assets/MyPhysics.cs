@@ -157,60 +157,78 @@ public class MyPhysics : MonoBehaviour
 
     public void playerHasCollided(BoxCollider collider)
     {
-        //wall collision
-
-        //TODO gerer le nouveau boolean
-        float distanceX = ((wallTranform.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
-        float wallPosition = wallTranform.transform.position.x + wallTranform.center.x;
-
-        if (speed.x < 0)//on collide le mur sur sa droite
+        if (collider.CompareTag("Wall"))
         {
-            speed.x = 0;
-            position = new Vector2(wallPosition + distanceX, position.y);
+            //wall collision
+
+            //TODO gerer le nouveau boolean
+            float distanceX = ((collider.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
+            float wallPosition = collider.transform.position.x + collider.center.x;
+
+            if (speed.x < 0)//on collide le mur sur sa droite
+            {
+                speed.x = 0;
+                position = new Vector2(wallPosition + distanceX, position.y);
+                isInContactWithLeftWall = true;
+            }
+            else if (speed.x > 0)//on collide le mur sur sa gauche
+            {
+                speed.x = 0;
+                position = new Vector2(wallPosition - distanceX, position.y);
+                isInContactWithRightWall = true;
+            }
+            //si la speed est nul on a pas bouge
         }
-        else if (speed.x > 0)//on collide le mur sur sa gauche
+        else if (collider.CompareTag("platform"))
         {
-            speed.x = 0;
-            position = new Vector2(wallPosition - distanceX, position.y);
+
+
+            //plateform collision
+
+
+            //TODO gerer le nouveau bool
+            //distance entre le collider et le joueur
+            float distanceY = ((collider.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
+            Debug.Log(distanceY);
+            //la position du collider par rapport a l'object
+            float center = collider.center.y;
+            Debug.Log(center);
+            //la position de l'object portant le collider
+            float positionCollider = collider.transform.position.y;
+            Debug.Log(positionCollider);
+            //position du collider
+            float platformPosition = center + positionCollider;
+            Debug.Log(platformPosition);
+
+            if (speed.y < 0)//on collide le mur sur le haut
+            {
+                speed.y = 0;
+                position = new Vector2(position.x, platformPosition + distanceY);
+                isInContactWithPlateform = true;
+            }
+            else if (speed.y > 0)//on collide le mur sur le bas
+            {
+                speed.y = 0;
+                position = new Vector2(position.x, platformPosition - distanceY);
+                isInContactWithRoof = true;
+            }
+            Debug.Log(position);
+            //si la speed est nul on a pas bouge
         }
-        //si la speed est nul on a pas bouge
-
-     
-
-        //plateform collision
-
-
-        //TODO gerer le nouveau bool
-        //distance entre le collider et le joueur
-        float distanceY = ((platTranform.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
-        Debug.Log(distanceY);
-        //la position du collider par rapport a l'object
-        float center = platTranform.center.y;
-        Debug.Log(center);
-        //la position de l'object portant le collider
-        float positionCollider = platTranform.transform.position.y;
-        Debug.Log(positionCollider);
-        //position du collider
-        float platformPosition = center + positionCollider;
-        Debug.Log(platformPosition);
-
-        if (speed.y < 0)//on collide le mur sur le haut
-        {
-            speed.y = 0;
-            position = new Vector2(position.x, platformPosition + distanceY);
-        }
-        else if (speed.y > 0)//on collide le mur sur le bas
-        {
-           // speed.y = 0;
-            position = new Vector2(position.x, platformPosition - distanceY);
-        }
-        Debug.Log(position);
-        //si la speed est nul on a pas bouge
 
     }
 
     public void playerHasExitCollider(BoxCollider collider)
     {
-        ;
+        if (collider.CompareTag("Wall"))
+        {
+            isInContactWithLeftWall = false;
+            isInContactWithRightWall = false;
+        }
+        if (collider.CompareTag("Platform"))
+        {
+            isInContactWithRoof = false;
+            isInContactWithPlateform = false;
+        }
     }
 }
