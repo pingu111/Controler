@@ -50,7 +50,7 @@ public class LevelFactory : MonoBehaviour
             Debug.Log(child.gameObject);
             Debug.Log(child.gameObject.tag);
 
-            if (child.gameObject.tag != "Platform")
+            if (child.gameObject.tag != StringEnum.GetStringValue(Tags.PLATFORM))
             {
                 Destroy(child.gameObject);
             }
@@ -66,7 +66,7 @@ public class LevelFactory : MonoBehaviour
         {
             Debug.Log(child.gameObject);
             Debug.Log(child.gameObject.tag);
-            if (child.gameObject.tag != "Roof")
+            if (child.gameObject.tag != StringEnum.GetStringValue(Tags.ROOF))
             {
                 Destroy(child.gameObject);
             }
@@ -82,7 +82,7 @@ public class LevelFactory : MonoBehaviour
         {
             Debug.Log(child.gameObject);
             Debug.Log(child.gameObject.tag);
-            if (child.gameObject.tag != "LeftWallPlatform")
+            if (child.gameObject.tag != StringEnum.GetStringValue(Tags.LEFT_WALL))
             {
                 Destroy(child.gameObject);
             }
@@ -96,7 +96,7 @@ public class LevelFactory : MonoBehaviour
         rightWall.gameObject.name = "RightWall";
         foreach (Transform child in rightWall.transform)
         {
-            if (child.gameObject.tag != "RightWallPlatform")
+            if (child.gameObject.tag != StringEnum.GetStringValue(Tags.RIGHT_WALL))
             {
                 Destroy(child.gameObject);
             }

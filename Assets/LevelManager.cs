@@ -29,11 +29,34 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private float timeBeginning = 0;
 
-	// Use this for initialization
-	void Start ()
+    /// <summary>
+    /// Cooldown between the spikes
+    /// </summary>
+    private float cooldown = 2;
+
+    /// <summary>
+    /// The total number of group of spikes
+    /// </summary>
+    private int nbGroupSpikes = 4;
+
+    /// <summary>
+    /// The total number of spikes
+    /// </summary>
+    private int nbSpikes = 4;
+
+    /// <summary>
+    /// The creator of the spikes
+    /// </summary>
+    public GameObject spikeFactory;
+
+    // Use this for initialization
+    void Start ()
     {
         EventManager.addActionToEvent(MyEventTypes.ONLOSE, onLose);
-        createListEvents();
+        createListEventsScripted();
+
+        nbSpikes = (spikeFactory.GetComponent<SpikeFactory>().nbSpikesGround + 2*spikeFactory.GetComponent<SpikeFactory>().nbSpikesWall);
+        nbGroupSpikes = (spikeFactory.GetComponent<SpikeFactory>().nbGroupGround + 2 * spikeFactory.GetComponent<SpikeFactory>().nbGroupWall);
     }
 
     // Update is called once per frame
@@ -64,18 +87,38 @@ public class LevelManager : MonoBehaviour
                     case TypeScriptedEvent.GROUPSPIKEOUT:
                         EventManager.raise<int>(MyEventTypes.GROUPSPIKEOUT, id);
                         break;
+
                     case TypeScriptedEvent.TEXT:
                         EventManager.raise<int>(MyEventTypes.TEXTCHANGE, id);
                         break;
+
                     default:
                         break;
                 }
                 listEvents.Remove(listEvents[i]);
             }
         }
-	}
+        if(listEvents.Count < 1 )
+        {
+            float nextTime = ((Time.time - timeBeginning) + cooldown);
+            int randomId = 0;
 
-    void createListEvents()
+            if (Random.Range(0,100) < 80)
+            {
+                randomId =(int)Random.Range(1, nbGroupSpikes - 0.01f);
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, Time.time+cooldown, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, Time.time + cooldown + 4, randomId));
+            }
+            else
+            {
+                randomId = (int)Random.Range(1, nbSpikes - 0.01f);
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, Time.time + cooldown, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEOUT, Time.time + cooldown + 4, randomId));
+            }
+        }
+    }
+
+    void createListEventsScripted()
     {
         // Text "3,2,1, go"
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 1, 1));
@@ -92,40 +135,6 @@ public class LevelManager : MonoBehaviour
 
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 12, 6));
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 15, 42));
-
-
-        /*
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 2, 1));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 3, 2));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 4, 3));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 5, 4));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 6, 5));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 7, 6));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 8, 7));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 9, 8));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 10, 9));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 11, 10));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 12, 11));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 13, 12));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 14, 13));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 15, 14));
-
-
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 15, 1));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 16, 2));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 17, 3));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 18, 4));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 19, 5));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 20, 6));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 21, 7));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 22, 8));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 23, 9));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 24, 10));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 25, 11));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 26, 12));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 27, 13));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 28, 14));*/
-
     }
 
     void onLose()

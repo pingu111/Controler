@@ -10,13 +10,13 @@ using System;
 
 public enum Tags
 {
-    [StringValue("leftWall")]
+    [StringValue("LeftWallPlatform")]
     LEFT_WALL,
-    [StringValue("rightWall")]
+    [StringValue("RightWallPlatform")]
     RIGHT_WALL,
-    [StringValue("platform")]
+    [StringValue("Platform")]
     PLATFORM,
-    [StringValue("roof")]
+    [StringValue("Roof")]
     ROOF
 }
 
