@@ -208,4 +208,9 @@ public class MyPhysics : MonoBehaviour
         //si la speed est nul on a pas bouge
 
     }
+
+    public void playerHasExitCollider(BoxCollider collider)
+    {
+        ;
+    }
 }

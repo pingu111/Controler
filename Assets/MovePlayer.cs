@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovePlayer : MonoBehaviour {
+public class MovePlayer : MonoBehaviour
+{
 
     public float speedX;
     public float speedJumpY;
@@ -15,14 +16,14 @@ public class MovePlayer : MonoBehaviour {
     // Has the player already used his double jump ?
     private bool doubleJumpedUsed = false;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         controls();
         this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;
@@ -39,37 +40,40 @@ public class MovePlayer : MonoBehaviour {
     void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject + " entered");
-        if (collision.gameObject.tag == "Platform")
-        {
-            isInContactWithPlatform = true;
-            doubleJumpedUsed = false;
-            if (collision.GetType() == typeof(BoxCollider))
-                this.GetComponent<MyPhysics>().playerHasCollidePlatform((BoxCollider)collision);
-            else
-                Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
-        }
-        else if (collision.gameObject.tag == "WallJumpPlatform")
-        {
-            isInContactWithWall = true;
-            doubleJumpedUsed = false;
-            if (collision.GetType() == typeof(BoxCollider))
-                this.GetComponent<MyPhysics>().playerHasCollideWall((BoxCollider)collision);
-            else
-                Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
-        }
-        else if (collision.gameObject.tag == "Spike")
+
+        if (collision.gameObject.tag == "Spike")
         {
             EventManager.raise(MyEventTypes.ONLOSE);
+        }
+        else
+        {
+            if (collision.gameObject.tag == "Platform")
+            {
+                isInContactWithPlatform = true;
+                doubleJumpedUsed = false;
+            }
+            else if (collision.gameObject.tag == "WallJumpPlatform")
+            {
+                isInContactWithWall = true;
+                doubleJumpedUsed = false;
+            }
+
+            if (collision.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasCollided((BoxCollider)collision);
+            else
+                Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
         }
     }
 
     void OnTriggerExit(Collider collision)
     {
         Debug.Log(collision.gameObject + " left");
+
         if (collision.gameObject.tag == "Platform")
-            isInContactWithPlatform = false;
+                isInContactWithPlatform = false;
         else if (collision.gameObject.tag == "WallJumpPlatform")
-            isInContactWithWall = false;
+                isInContactWithWall = false;
+        this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
     }
 
     /// <summary>
@@ -78,7 +82,7 @@ public class MovePlayer : MonoBehaviour {
     void controls()
     {
         float xAxis = Input.GetAxis("XAxis");
-        if(!isInContactWithWall)
+        if (!isInContactWithWall)
             this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.y, 0);
 
         if (Input.GetButtonDown("Jump") && (isInContactWithPlatform || !doubleJumpedUsed))
@@ -93,3 +97,11 @@ public class MovePlayer : MonoBehaviour {
         }
     }
 }
+
+
+
+
+
+
+
+
