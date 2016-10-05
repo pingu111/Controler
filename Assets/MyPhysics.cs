@@ -34,25 +34,25 @@ public class MyPhysics : MonoBehaviour
     /// The gravity of the world
     /// </summary>
     [SerializeField]
-    private float gravity;
+    private float gravity=9;
 
     /// <summary>
     /// la vitesse max du joueur
     /// </summary>
     [SerializeField]
-    private float maxSpeed;
+    private float maxSpeed=10;
 
     /// <summary>
     /// coefficient de frottement au sol
     /// </summary>
     [SerializeField]
-    private float groundDragCoeff;
+    private float groundDragCoeff=10;
 
     /// <summary>
     /// coefficient de frottement en l'air
     /// </summary>
     [SerializeField]
-    private float airDragCoeff;
+    private float airDragCoeff=1;
 
 	// Use this for initialization
 	void Start ()
@@ -176,16 +176,12 @@ public class MyPhysics : MonoBehaviour
         else if (collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM)))
         {
             float distanceY = ((collider.bounds.size.y + move.GetComponent<Collider>().bounds.size.y) / 2);
-            Debug.Log(distanceY);
             //la position du collider par rapport a l'object
             float center = collider.center.y;
-            Debug.Log(center);
             //la position de l'object portant le collider
             float positionCollider = collider.transform.position.y;
-            Debug.Log(positionCollider);
             //position du collider
             float platformPosition = center + positionCollider;
-            Debug.Log(platformPosition);
             speed.y = 0;
             position = new Vector2(position.x, platformPosition + distanceY);
             isInContactWithPlateform = true;
