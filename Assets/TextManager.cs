@@ -19,14 +19,40 @@ public class TextManager : MonoBehaviour {
     /// </summary>
     private int score = 0;
 
+    /// <summary>
+    /// Has the game started ?
+    /// </summary>
+    bool gameStartedAndPlayerAlive = false;
+
+    /// <summary>
+    /// Number of points gained per frame
+    /// </summary>
+    [SerializeField]
+    private int pointsPerFrame = 1;
+
 	// Use this for initialization
 	void Start ()
     {
         textScore.GetComponent<Text>().text = "";
         textInstructions.GetComponent<Text>().text = "";
-
+        gameStartedAndPlayerAlive = false;
         EventManager.addActionToEvent<int>(MyEventTypes.SCOREADD, addScore);
         EventManager.addActionToEvent<int>(MyEventTypes.TEXTCHANGE, textChange);
+        EventManager.addActionToEvent(MyEventTypes.ONLOSE, playerLost);
+
+    }
+
+    void Update()
+    {
+        if(gameStartedAndPlayerAlive)
+        {
+            addScore(pointsPerFrame);
+        }
+    }
+
+    void playerLost()
+    {
+        gameStartedAndPlayerAlive = false;
     }
 
     /// <summary>
@@ -58,6 +84,7 @@ public class TextManager : MonoBehaviour {
                 break;
             case 4:
                 textInstructions.GetComponent<Text>().text = "GO !";
+                gameStartedAndPlayerAlive = true;
                 break;
             case 5:
                 textInstructions.GetComponent<Text>().text = "Attention...";

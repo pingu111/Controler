@@ -142,7 +142,7 @@ public class MyPhysics : MonoBehaviour
         }
         else if (speed.y > 0)//on collide le mur sur le bas
         {
-            speed.y = 0;
+           // speed.y = 0;
             position = new Vector2(position.x, platformPosition - distanceY);
         }
         Debug.Log(position);

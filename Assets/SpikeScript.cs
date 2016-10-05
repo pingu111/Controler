@@ -67,8 +67,6 @@ public class SpikeScript : MonoBehaviour
     {
         if (mustBeInMovementOut && Time.time > (timeBeginningUp + secondsBeforeUp))
         {
-            //Debug.Log(Time.time + " " + timeBeginningUp + " " + secondsBeforeUp);
-
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
 
             float rotation = this.transform.rotation.z;
@@ -80,9 +78,13 @@ public class SpikeScript : MonoBehaviour
             else if (rotation == 0 && posSpikeCam.y <= translateInCamera)
                 this.transform.Translate(new Vector3(0, speed, 0));
         }
-        else if (mustBeInMovementIn)
+        else if(mustBeInMovementOut)
         {
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        }
+        else if (mustBeInMovementIn)
+        {
+            this.gameObject.GetComponent<Renderer>().material.color = Color.green;
 
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
@@ -123,9 +125,6 @@ public class SpikeScript : MonoBehaviour
     private void raiseSpike()
     {
         timeBeginningUp = Time.time;
-
-        this.gameObject.GetComponent<Renderer>().material.color = Color.red;
-
         mustBeInMovementOut = true;
         mustBeInMovementIn = false;
 
@@ -145,7 +144,6 @@ public class SpikeScript : MonoBehaviour
 
     private void retractThisSpike()
     {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.white;
         mustBeInMovementIn = true;
         mustBeInMovementOut = false;
     }
