@@ -49,6 +49,11 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public GameObject spikeFactory;
 
+    /// <summary>
+    /// Number of spikes that will go out
+    /// </summary>
+    private int nbSpikeToOut = 0;
+
     // Use this for initialization
     void Start ()
     {
@@ -83,6 +88,7 @@ public class LevelManager : MonoBehaviour
 
                     case TypeScriptedEvent.GROUPSPIKEIN:
                         EventManager.raise<int>(MyEventTypes.GROUPSPIKEIN, id);
+                        nbSpikeToOut--;
                         break;
                     case TypeScriptedEvent.GROUPSPIKEOUT:
                         EventManager.raise<int>(MyEventTypes.GROUPSPIKEOUT, id);
@@ -98,7 +104,8 @@ public class LevelManager : MonoBehaviour
                 listEvents.Remove(listEvents[i]);
             }
         }
-        if(listEvents.Count < 1 )
+        // If we don't have any more spikes to lever
+        if(nbSpikeToOut == 0)
         {
             float nextTime = ((Time.time - timeBeginning) + cooldown);
             int randomId = 0;
@@ -107,14 +114,17 @@ public class LevelManager : MonoBehaviour
             {
                 randomId =(int)Random.Range(1, nbGroupSpikes - 0.01f);
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, Time.time+cooldown, randomId));
+                nbSpikeToOut++;
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, Time.time + cooldown + 4, randomId));
             }
             else
             {
                 randomId = (int)Random.Range(1, nbSpikes - 0.01f);
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, Time.time + cooldown, randomId));
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEOUT, Time.time + cooldown + 4, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEOUT, Time.time + cooldown, randomId));
+                nbSpikeToOut++;
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, Time.time + cooldown + 4, randomId));
             }
+            cooldown *= 0.95f;
         }
     }
 
@@ -128,9 +138,11 @@ public class LevelManager : MonoBehaviour
 
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 6, 5));
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 6, 1));
+        nbSpikeToOut++;
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 10, 1));
 
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 9, 6));
+        nbSpikeToOut++;
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 13, 6));
 
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 12, 6));

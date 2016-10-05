@@ -373,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textScore: {fileID: 2061284503}
   textInstructions: {fileID: 1399407977}
+  pointsPerFrame: 1
 --- !u!1 &816026733
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1462532522}
+  spikeFactory: {fileID: 2049870994}
 --- !u!4 &816026735
 Transform:
   m_ObjectHideFlags: 0
