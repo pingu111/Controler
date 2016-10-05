@@ -5,8 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Platform
-  - WallJumpPlatform
+  - LeftWallPlatform
   - Spike
+  - Roof
+  - RightWallPlatform
   layers:
   - Default
   - TransparentFX
