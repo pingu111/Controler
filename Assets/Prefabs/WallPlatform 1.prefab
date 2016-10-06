@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000014225514984}
   - 65: {fileID: 65000012698586088}
   - 54: {fileID: 54000012245050432}
+  - 114: {fileID: 114000012966065000}
   m_Layer: 0
   m_Name: UpPlatform
   m_TagString: Platform
@@ -338,3 +339,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 0.05, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114000012966065000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010331593544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe47d22db3fab2b4da9b1a8287473d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

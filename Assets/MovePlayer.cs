@@ -50,6 +50,9 @@ public class MovePlayer : MonoBehaviour
         {
             if (collision.gameObject.tag == "Platform")
             {
+                if (collision.gameObject.GetComponent<PlatformScript>() != null)
+                    collision.gameObject.GetComponent<PlatformScript>().platformTouched();
+
                 isInContactWithPlatform = true;
                 doubleJumpedUsed = false;
             }

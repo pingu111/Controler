@@ -47,13 +47,12 @@ public class LevelFactory : MonoBehaviour
         ground.gameObject.name = "Ground";
         foreach(Transform child in ground.transform)
         {
-            Debug.Log(child.gameObject);
-            Debug.Log(child.gameObject.tag);
-
             if (child.gameObject.tag != StringEnum.GetStringValue(Tags.PLATFORM))
             {
                 Destroy(child.gameObject);
             }
+            else
+                Destroy(child.gameObject.GetComponent<PlatformScript>());
         }
 
         GameObject roof = Instantiate(platformPrefab);
@@ -64,8 +63,6 @@ public class LevelFactory : MonoBehaviour
         roof.gameObject.name = "Roof";
         foreach (Transform child in roof.transform)
         {
-            Debug.Log(child.gameObject);
-            Debug.Log(child.gameObject.tag);
             if (child.gameObject.tag != StringEnum.GetStringValue(Tags.ROOF))
             {
                 Destroy(child.gameObject);
@@ -80,8 +77,6 @@ public class LevelFactory : MonoBehaviour
         leftWall.gameObject.name = "LeftWall";
         foreach (Transform child in leftWall.transform)
         {
-            Debug.Log(child.gameObject);
-            Debug.Log(child.gameObject.tag);
             if (child.gameObject.tag != StringEnum.GetStringValue(Tags.LEFT_WALL))
             {
                 Destroy(child.gameObject);
