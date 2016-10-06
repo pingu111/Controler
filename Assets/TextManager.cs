@@ -67,8 +67,11 @@ public class TextManager : MonoBehaviour {
     /// <param name="scoreToAdd"></param>
     void addScore(int scoreToAdd)
     {
-        score += scoreToAdd;
-        textScore.GetComponent<Text>().text = score.ToString("n0");
+        if (playerAlive)
+        {
+            score += scoreToAdd;
+            textScore.GetComponent<Text>().text = score.ToString("n0");
+        }
     }
 
     /// <summary>
@@ -77,31 +80,37 @@ public class TextManager : MonoBehaviour {
     /// <param name="idText"></param>
     void textChange(int idText)
     {
-        switch(idText)
+        if(playerAlive)
         {
-            case 1:
-                textInstructions.GetComponent<Text>().text = "3";
-                break;
-            case 2:
-                textInstructions.GetComponent<Text>().text = "2";
-                break;
-            case 3:
-                textInstructions.GetComponent<Text>().text = "1";
-                break;
-            case 4:
-                textInstructions.GetComponent<Text>().text = "GO !";
-                playerAlive = true;
-                break;
-            case 5:
-                textInstructions.GetComponent<Text>().text = "Attention...";
-                break;
-            case 6:
-                textInstructions.GetComponent<Text>().text = "Bon courage !";
-                break;
-            default:
-                textInstructions.GetComponent<Text>().text = "";
-                break;
+            switch (idText)
+            {
+                case 1:
+                    textInstructions.GetComponent<Text>().text = "3";
+                    break;
+                case 2:
+                    textInstructions.GetComponent<Text>().text = "2";
+                    break;
+                case 3:
+                    textInstructions.GetComponent<Text>().text = "1";
+                    break;
+                case 4:
+                    textInstructions.GetComponent<Text>().text = "GO !";
+                    playerAlive = true;
+                    gameStarted = true;
+                    break;
+                case 5:
+                    textInstructions.GetComponent<Text>().text = "Attention...";
+                    break;
+                case 6:
+                    textInstructions.GetComponent<Text>().text = "Bon courage !";
+                    break;
+                case 7:
+                    textInstructions.GetComponent<Text>().text = "You lose !";
+                    break;
+                default:
+                    textInstructions.GetComponent<Text>().text = "";
+                    break;
+            }
         }
     }
-
 }

@@ -647,9 +647,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spikePrefab: {fileID: 1000010345862176, guid: 8b3b7b4eff55f8d41924c2cc3da05c99,
     type: 2}
-  nbSpikesGround: 20
+  nbSpikesGround: 30
   nbSpikesWall: 30
-  nbGroupGround: 4
+  nbGroupGround: 5
   nbGroupWall: 5
 --- !u!4 &2049870996
 Transform:

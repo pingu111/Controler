@@ -29,12 +29,12 @@ public class SpikeScript : MonoBehaviour
     private float translateInCamera = 0.05f;
 
      /// <summary>
-    /// translation speed of the spikes
+    /// Original translation speed of the spikes
     /// </summary>
     private float speed = 0.1f;
 
     /// <summary>
-    /// The number of seconds before the spike go up
+    /// The original number of seconds before the spike go up
     /// </summary>
     public float secondsBeforeUp = 2.5f;
 
@@ -48,6 +48,16 @@ public class SpikeScript : MonoBehaviour
     /// </summary>
     private float posWhenIn = 0;
 
+    /// <summary>
+    /// The speed of the spike
+    /// </summary>
+    private float actualSpeed = 0;
+
+    /// <summary>
+    /// The number of seconds before the spike go up
+    /// </summary>
+    private float actualTimeToGoUp = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -60,23 +70,76 @@ public class SpikeScript : MonoBehaviour
         else if (rotation == 0)
             posWhenIn = posSpikeCam.y;
 
+        actualTimeToGoUp = secondsBeforeUp;
+        actualSpeed = speed;
+
         subscribeEvent<int>();
     }
 
     void Update()
     {
-        if (mustBeInMovementOut && Time.time > (timeBeginningUp + secondsBeforeUp))
+        //We increase the speed and decrease the cooldown
+        actualTimeToGoUp = secondsBeforeUp * Mathf.Max(0.1f, 1 - Time.timeSinceLevelLoad / 300);
+        actualSpeed = speed * Mathf.Min(5, 1 + Time.timeSinceLevelLoad / 60);
+
+        // We apply translation to the spikes
+        // Then we check for the ending position of the spike
+
+        //Go out has priority vs go in
+        if (mustBeInMovementOut && Time.time > (timeBeginningUp + actualTimeToGoUp))
         {
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
 
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
+            Vector3 perfectPosition = new Vector3(this.transform.position.x,
+                                                    Camera.main.ViewportToWorldPoint(new Vector3(posSpikeCam.x,
+                                                                                                 translateInCamera,
+                                                                                                 posSpikeCam.z)).y,
+                                                   this.transform.position.z);
+
             if (rotation > 0 && posSpikeCam.x <= translateInCamera)
-                this.transform.Translate(new Vector3(0, -speed, 0));
+            {
+                this.transform.Translate(new Vector3(0, -actualSpeed, 0));
+                Vector3 newPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                if (newPos.x >= translateInCamera)
+                {
+                    perfectPosition = new Vector3(
+                                                    Camera.main.ViewportToWorldPoint(new Vector3(translateInCamera,
+                                                                                                 posSpikeCam.y,
+                                                                                                 posSpikeCam.z)).x,
+                                                    this.transform.position.y,
+                                                    this.transform.position.z);
+                    this.transform.position = perfectPosition;
+                    mustBeInMovementOut = false;
+                }
+            }
             else if (rotation < 0 && posSpikeCam.x >= (1 - translateInCamera))
-                this.transform.Translate(new Vector3(0, -speed, 0));
+            {
+                this.transform.Translate(new Vector3(0, -actualSpeed, 0));
+                Vector3 newPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                if (newPos.x <= (1 - translateInCamera))
+                {
+                    perfectPosition = new Vector3(
+                                                    Camera.main.ViewportToWorldPoint(new Vector3((1 - translateInCamera),
+                                                                                                 posSpikeCam.y,
+                                                                                                 posSpikeCam.z)).x,
+                                                    this.transform.position.y,
+                                                    this.transform.position.z);
+                    this.transform.position = perfectPosition;
+                    mustBeInMovementOut = false;
+                }
+            }
             else if (rotation == 0 && posSpikeCam.y <= translateInCamera)
-                this.transform.Translate(new Vector3(0, speed, 0));
+            {
+                this.transform.Translate(new Vector3(0, actualSpeed, 0));
+                Vector3 newPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                if (newPos.y >= translateInCamera)
+                {
+                    this.transform.position = perfectPosition;
+                    mustBeInMovementOut = false;
+                }
+            }
         }
         else if(mustBeInMovementOut)
         {
@@ -88,14 +151,57 @@ public class SpikeScript : MonoBehaviour
 
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
+            Vector3 perfectPosition = new Vector3(  this.transform.position.x, 
+                                                    Camera.main.ViewportToWorldPoint(new Vector3(posSpikeCam.x, 
+                                                                                                 posWhenIn,
+                                                                                                 posSpikeCam.z)).y, 
+                                                    this.transform.position.z);
 
             if (rotation > 0 && posSpikeCam.x >= posWhenIn)
-                this.transform.Translate(new Vector3(0, speed, 0));
+            {
+                this.transform.Translate(new Vector3(0, actualSpeed, 0));
+                Vector3 newPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                if (newPos.x <= posWhenIn)
+                {
+                    perfectPosition = new Vector3(
+                                                    Camera.main.ViewportToWorldPoint(new Vector3(posWhenIn,
+                                                                                                 posSpikeCam.y,
+                                                                                                 posSpikeCam.z)).x,
+                                                    this.transform.position.y,
+                                                    this.transform.position.z);
+                    this.transform.position = perfectPosition;
+                    mustBeInMovementIn = false;
+                }
+            }
             else if (rotation < 0 && posSpikeCam.x <= posWhenIn)
-                this.transform.Translate(new Vector3(0, speed, 0));
+            {
+                this.transform.Translate(new Vector3(0, actualSpeed, 0));
+                Vector3 newPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                if (newPos.x >= posWhenIn)
+                {
+                    perfectPosition = new Vector3(
+                                                    Camera.main.ViewportToWorldPoint(new Vector3(posWhenIn,
+                                                                                                 posSpikeCam.y,
+                                                                                                 posSpikeCam.z)).x,
+                                                    this.transform.position.y,
+                                                    this.transform.position.z);
+                    this.transform.position = perfectPosition;
+                    mustBeInMovementIn = false;
+                }
+            }
             else if (rotation == 0 && posSpikeCam.y >= posWhenIn)
-                this.transform.Translate(new Vector3(0, -speed, 0));
+            {
+                this.transform.Translate(new Vector3(0, -actualSpeed, 0));
+                Vector3 newPos = Camera.main.WorldToViewportPoint(this.transform.position);
+                if (newPos.y <= posWhenIn)
+                {
+                    this.transform.position = perfectPosition;
+                    mustBeInMovementIn = false;
+                }
+            }
         }
+
+
     }
 
     private void subscribeEvent<T>()
@@ -124,10 +230,8 @@ public class SpikeScript : MonoBehaviour
 
     private void raiseSpike()
     {
-        timeBeginningUp = Time.time;
-        mustBeInMovementOut = true;
-        mustBeInMovementIn = false;
-
+            timeBeginningUp = Time.time;
+            mustBeInMovementOut = true;
     }
 
     public void retractSpike(int i)
@@ -144,7 +248,6 @@ public class SpikeScript : MonoBehaviour
 
     private void retractThisSpike()
     {
-        mustBeInMovementIn = true;
-        mustBeInMovementOut = false;
+            mustBeInMovementIn = true;
     }
 }

@@ -87,6 +87,7 @@ public class LevelManager : MonoBehaviour
                 {
                     case TypeScriptedEvent.SPIKEIN:
                         EventManager.raise<int>(MyEventTypes.SPIKEIN, id);
+                        nbSpikeToOut--;
                         break;
                     case TypeScriptedEvent.SPIKEOUT:
                         EventManager.raise<int>(MyEventTypes.SPIKEOUT, id);
@@ -110,6 +111,9 @@ public class LevelManager : MonoBehaviour
                 listEvents.Remove(listEvents[i]);
             }
         }
+
+        Debug.Log("nbSpikeToOut "+ nbSpikeToOut);
+
         // If we don't have any more spikes to lever
         if (nbSpikeToOut < nbSpikeSameTime)
         {
@@ -119,20 +123,19 @@ public class LevelManager : MonoBehaviour
             if (Random.Range(0, 100) < 80)
             {
                 randomId = (int)Random.Range(1, nbGroupSpikes - 0.01f);
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, Time.time + cooldown, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, nextTime, randomId));
                 nbSpikeToOut++;
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, Time.time + cooldown + 4, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, nextTime + 4, randomId));
             }
             else
             {
                 randomId = (int)Random.Range(1, nbSpikes - 0.01f);
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEOUT, Time.time + cooldown, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEOUT, nextTime, randomId));
                 nbSpikeToOut++;
-                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, Time.time + cooldown + 4, randomId));
+                listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, nextTime + 4, randomId));
             }
-            cooldown *= 0.95f;
-
-            if (Random.Range(0, 100) > 80)
+            cooldown = Mathf.Max(2, cooldown * 0.98f);
+            if (Random.Range(0, 100) > 50)
             {
                 nbSpikeSameTime++;
             }
@@ -162,6 +165,8 @@ public class LevelManager : MonoBehaviour
 
     void onLose()
     {
+        EventManager.raise<int>(MyEventTypes.TEXTCHANGE, 7);
+
         Debug.Log("Aha loser");
         Destroy(player);
     }
