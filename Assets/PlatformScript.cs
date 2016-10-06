@@ -18,6 +18,11 @@ public class PlatformScript : MonoBehaviour {
     /// </summary>
     private float timeBeforeDisapear;
 
+    /// <summary>
+    /// The position before respawn
+    /// </summary>
+    private Vector3 oldPosition;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -55,8 +60,13 @@ public class PlatformScript : MonoBehaviour {
     /// </summary>
     public void hidePlatform()
     {
+        // dirty time :
+        // OnTriggerExit is not called if we desactivate the collider ='(
+        // so, translation.
+
+        oldPosition = this.transform.position;
+        this.transform.position = new Vector3(1000, 1000, 1000);
         this.transform.parent.GetComponent<Renderer>().enabled = false;
-        this.gameObject.GetComponent<BoxCollider>().enabled = false;
     }
 
     /// <summary>
@@ -64,9 +74,10 @@ public class PlatformScript : MonoBehaviour {
     /// </summary>
     public void respawnPlatform()
     {
-        lastTimeDesactivated =0;
+        this.transform.position =oldPosition;
+
+        lastTimeDesactivated = 0;
         this.transform.parent.GetComponent<Renderer>().enabled = true;
-        this.gameObject.GetComponent<BoxCollider>().enabled = true;
         this.transform.parent.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 10);
     }
 }
