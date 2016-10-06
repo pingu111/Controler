@@ -14,7 +14,8 @@ public enum MyEventTypes
     ONVICTORY,
     ONLOSE,
     SCOREADD,
-    TEXTCHANGE
+    TEXTCHANGE,
+    PLATFORMHIDEN
 }
 
 public delegate void Callback();

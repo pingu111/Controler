@@ -16,6 +16,9 @@ public class MovePlayer : MonoBehaviour
     // Has the player already used his double jump ?
     private bool doubleJumpedUsed = false;
 
+    // Lats platform collided
+    private BoxCollider lastCollider;
+
     // Use this for initialization
     void Start()
     {
@@ -50,8 +53,14 @@ public class MovePlayer : MonoBehaviour
         {
             if (collision.gameObject.tag == "Platform")
             {
+                // If it's a platform and not the ground
                 if (collision.gameObject.GetComponent<PlatformScript>() != null)
+                {
+                    if (collision.GetType() == typeof(BoxCollider))
+                        lastCollider = (BoxCollider)collision;
                     collision.gameObject.GetComponent<PlatformScript>().platformTouched();
+                    EventManager.addActionToEvent(MyEventTypes.PLATFORMHIDEN, platformExited);
+                }
 
                 isInContactWithPlatform = true;
                 doubleJumpedUsed = false;
@@ -70,12 +79,26 @@ public class MovePlayer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called when the platform disapear
+    /// </summary>
+    void platformExited()
+    {
+        this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)lastCollider);
+    }
+
     void OnTriggerExit(Collider collision)
     {
+        // If we exited normally the platform
+        if (lastCollider == collision)
+            EventManager.removeActionFromEvent(MyEventTypes.PLATFORMHIDEN, platformExited);
+
         Debug.Log(collision.gameObject + " left");
 
         if (collision.gameObject.tag == "Platform")
-                isInContactWithPlatform = false;
+        {
+            isInContactWithPlatform = false;
+        }
         else if (collision.gameObject.tag == "RightWallPlatform"
             || collision.gameObject.tag == "LeftWallPlatform")
                 isInContactWithWall = false;
