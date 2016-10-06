@@ -260,10 +260,10 @@ MonoBehaviour:
   posPlatforms:
   - {x: 0.5, y: 0.2, z: 0}
   - {x: 0.1, y: 0.7, z: 0}
-  - {x: 0.7, y: 0.5, z: 0}
+  - {x: 0.95, y: 0.5, z: 0}
   scalePlatforms:
   - {x: 5, y: 1, z: 1}
-  - {x: 10, y: 1, z: 1}
+  - {x: 3, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
 --- !u!1 &740807263
 GameObject:
@@ -522,8 +522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ec696243afce34ca23e75e938251f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedX: 15
-  speedJumpY: 400
+  speedX: 30
+  speedJumpY: 500
   isInContactWithPlatform: 0
   isInContactWithWall: 0
 --- !u!54 &1462532524
@@ -582,10 +582,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGivenAcceleration: {x: 0, y: 0}
-  gravity: 15
-  maxSpeed: 30
+  gravity: 20
+  maxSpeed: 100
   groundDragCoeff: 1
-  airDragCoeff: 1
+  airDragCoeff: 0.1
 --- !u!33 &1462532527
 MeshFilter:
   m_ObjectHideFlags: 0
