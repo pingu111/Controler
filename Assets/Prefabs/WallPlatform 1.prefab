@@ -40,7 +40,7 @@ GameObject:
   - 54: {fileID: 54000012128923460}
   m_Layer: 0
   m_Name: LeftWallPlatform
-  m_TagString: WallJumpPlatform
+  m_TagString: LeftWallPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

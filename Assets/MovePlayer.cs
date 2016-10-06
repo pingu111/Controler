@@ -43,7 +43,8 @@ public class MovePlayer : MonoBehaviour
 
         if (collision.gameObject.tag == "Spike")
         {
-            EventManager.raise(MyEventTypes.ONLOSE);
+            if(collision.gameObject.GetComponent<SpikeScript>() != null && collision.gameObject.GetComponent<SpikeScript>().canKillPlayer)
+                EventManager.raise(MyEventTypes.ONLOSE);
         }
         else
         {

@@ -58,6 +58,11 @@ public class SpikeScript : MonoBehaviour
     /// </summary>
     private float actualTimeToGoUp = 0;
 
+    /// <summary>
+    /// True if it can kill the player, false otherwise
+    /// </summary>
+    public bool canKillPlayer = false;
+
     // Use this for initialization
     void Start()
     {
@@ -72,7 +77,7 @@ public class SpikeScript : MonoBehaviour
 
         actualTimeToGoUp = secondsBeforeUp;
         actualSpeed = speed;
-
+        canKillPlayer = false;
         subscribeEvent<int>();
     }
 
@@ -89,6 +94,7 @@ public class SpikeScript : MonoBehaviour
         if (mustBeInMovementOut && Time.time > (timeBeginningUp + actualTimeToGoUp))
         {
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+            canKillPlayer = true;
 
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
@@ -144,10 +150,13 @@ public class SpikeScript : MonoBehaviour
         else if(mustBeInMovementOut)
         {
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+            canKillPlayer = true;
         }
         else if (mustBeInMovementIn)
         {
             this.gameObject.GetComponent<Renderer>().material.color = Color.green;
+            canKillPlayer = false;
+
 
             float rotation = this.transform.rotation.z;
             Vector3 posSpikeCam = Camera.main.WorldToViewportPoint(this.transform.position);
