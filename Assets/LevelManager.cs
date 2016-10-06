@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Number of spikes that can go Out at the same time (increase with difficulty)
     /// </summary>
-    private int nbSpikeSameTime = 1;
+    private float nbSpikeSameTime = 1;
 
     // Use this for initialization
     void Start ()
@@ -112,10 +112,9 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        Debug.Log("nbSpikeToOut "+ nbSpikeToOut);
 
         // If we don't have any more spikes to lever
-        if (nbSpikeToOut < nbSpikeSameTime)
+        if (nbSpikeToOut < (int)nbSpikeSameTime)
         {
             float nextTime = ((Time.time - timeBeginning) + cooldown);
             int randomId = 0;
@@ -135,10 +134,8 @@ public class LevelManager : MonoBehaviour
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, nextTime + 4, randomId));
             }
             cooldown = Mathf.Max(2, cooldown * 0.98f);
-            if (Random.Range(0, 100) > 50)
-            {
-                nbSpikeSameTime++;
-            }
+            if (nbSpikeSameTime < nbGroupSpikes + nbSpikes)
+                nbSpikeSameTime += 0.34f;
         }
     }
 

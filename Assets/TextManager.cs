@@ -112,5 +112,7 @@ public class TextManager : MonoBehaviour {
                     break;
             }
         }
+        else
+            textInstructions.GetComponent<Text>().text = "You lose !";
     }
 }
