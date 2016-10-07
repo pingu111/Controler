@@ -350,3 +350,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe47d22db3fab2b4da9b1a8287473d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldownRespawn: 5
+  timeBeforeDisapear: 3

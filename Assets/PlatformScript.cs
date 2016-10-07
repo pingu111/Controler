@@ -6,24 +6,21 @@ public class PlatformScript : MonoBehaviour {
     /// <summary>
     /// Number of seconds before respawn of the platform
     /// </summary>
-    private float cooldownRespawn;
+    public float cooldownRespawn = 5;
 
     /// <summary>
     /// Last time.time when the platform was desactivated
     /// </summary>
-    private float lastTimeDesactivated;
+    private float lastTimeDesactivated = 0;
 
     /// <summary>
     /// Number of seconds before the desapear of the platform
     /// </summary>
-    private float timeBeforeDisapear;
+    public float timeBeforeDisapear = 3;
 
 	// Use this for initialization
 	void Start ()
     {
-        lastTimeDesactivated = 0;
-        cooldownRespawn = 5;
-        timeBeforeDisapear = 1;
         this.transform.parent.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 10);
     }
 

@@ -3,8 +3,14 @@ using System.Collections;
 
 public class MovePlayer : MonoBehaviour
 {
-
+    /// <summary>
+    /// The multiplicator of the speed 
+    /// </summary>
     public float speedX;
+
+    /// <summary>
+    /// The height of the jump
+    /// </summary>
     public float speedJumpY;
 
     // Is the player in contact wiith a plateform ?
@@ -75,7 +81,7 @@ public class MovePlayer : MonoBehaviour
             if (collision.GetType() == typeof(BoxCollider))
                 this.GetComponent<MyPhysics>().playerHasCollided((BoxCollider)collision);
             else
-                Debug.Log("CRITICAL PLATFORM NOT BOXCOLLIDER");
+                Debug.Log("CRITICAL " + collision.gameObject + " PLATFORM NOT BOXCOLLIDER");
         }
     }
 
@@ -89,20 +95,28 @@ public class MovePlayer : MonoBehaviour
 
     void OnTriggerExit(Collider collision)
     {
+        Debug.Log(collision.gameObject + " exited");
         // If we exited normally the platform
         if (lastCollider == collision)
             EventManager.removeActionFromEvent(MyEventTypes.PLATFORMHIDEN, platformExited);
 
-        Debug.Log(collision.gameObject + " left");
-
         if (collision.gameObject.tag == "Platform")
         {
             isInContactWithPlatform = false;
+            if (collision.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
+            else
+                Debug.Log("CRITICAL " + collision.gameObject + " PLATFORM NOT BOXCOLLIDER");
         }
         else if (collision.gameObject.tag == "RightWallPlatform"
             || collision.gameObject.tag == "LeftWallPlatform")
-                isInContactWithWall = false;
-        this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
+        {
+            isInContactWithWall = false;
+            if (collision.GetType() == typeof(BoxCollider))
+                this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
+            else
+                Debug.Log("CRITICAL " + collision.gameObject + " PLATFORM NOT BOXCOLLIDER");
+        }
     }
 
     /// <summary>

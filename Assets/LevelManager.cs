@@ -163,8 +163,6 @@ public class LevelManager : MonoBehaviour
     void onLose()
     {
         EventManager.raise<int>(MyEventTypes.TEXTCHANGE, 7);
-
-        Debug.Log("Aha loser");
         Destroy(player);
     }
 }
