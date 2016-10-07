@@ -51,6 +51,11 @@ public class SpikeFactory : MonoBehaviour
     /// </summary>
     public int nbGroupWall = 4;
 
+    /// <summary>
+    /// Working resolution
+    /// </summary>
+    public Vector2 normalResolution;
+
     // Use this for initialization
     void Start ()
     {
@@ -110,8 +115,13 @@ public class SpikeFactory : MonoBehaviour
     /// </summary>
     void initSpikes()
     {
+        float ratioX = Screen.currentResolution.width / normalResolution.x;
+        float ratioY = Screen.currentResolution.height / normalResolution.y;
+        Debug.Log(Screen.currentResolution + " " + normalResolution);
+        Debug.Log(ratioX + " " + ratioY);
+
         //We create all the spikes
-        for(int i = 0; i < posSpike.Count; i ++)
+        for (int i = 0; i < posSpike.Count; i ++)
         {
             GameObject spike = Instantiate(spikePrefab);
             int id = i + 1;
@@ -121,10 +131,11 @@ public class SpikeFactory : MonoBehaviour
             spike.transform.parent = this.transform;
 
             Vector3 posSpikeWorld = Camera.main.ViewportToWorldPoint(posSpike[i]);
-            spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
+
+            spike.transform.position = new Vector3(posSpikeWorld.x* ratioX, posSpikeWorld.y* ratioY, -1);
             spike.transform.Rotate(orientationsSpikes[i]);
 
-            spike.transform.localScale = scaleSpikes[i];
+            spike.transform.localScale = new Vector3( scaleSpikes[i].x*ratioX, scaleSpikes[i].y*ratioY, scaleSpikes[i].z);
             spike.gameObject.name = "Spike "+id;
         }
     }

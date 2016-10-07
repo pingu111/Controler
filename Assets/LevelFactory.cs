@@ -45,7 +45,6 @@ public class LevelFactory : MonoBehaviour
         initWalls();
         initPlatforms();
         initPlatformsWalls();
-
     }
 
     /// <summary>

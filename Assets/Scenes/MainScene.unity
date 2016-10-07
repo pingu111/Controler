@@ -261,10 +261,12 @@ MonoBehaviour:
   - {x: 0.5, y: 0.2, z: 0}
   - {x: 0.1, y: 0.7, z: 0}
   - {x: 0.95, y: 0.5, z: 0}
+  posWalls: []
   scalePlatforms:
   - {x: 5, y: 1, z: 1}
   - {x: 3, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
+  scaleWalls: []
 --- !u!1 &740807263
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +653,7 @@ MonoBehaviour:
   nbSpikesWall: 30
   nbGroupGround: 5
   nbGroupWall: 5
+  normalResolution: {x: 1920, y: 1080}
 --- !u!4 &2049870996
 Transform:
   m_ObjectHideFlags: 0
