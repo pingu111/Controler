@@ -133,10 +133,14 @@ public class SpikeFactory : MonoBehaviour
 
             Vector3 posSpikeWorld = Camera.main.ViewportToWorldPoint(posSpike[i]);
 
-            spike.transform.position = new Vector3(posSpikeWorld.x* ratioX, posSpikeWorld.y* ratioY, -1);
+          //  spike.transform.position = new Vector3(posSpikeWorld.x* ratioX, posSpikeWorld.y* ratioY, -1);
+            spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
+
             spike.transform.Rotate(orientationsSpikes[i]);
 
-            spike.transform.localScale = new Vector3( scaleSpikes[i].x*ratioX, scaleSpikes[i].y*ratioY, scaleSpikes[i].z);
+           // spike.transform.localScale = new Vector3( scaleSpikes[i].x*ratioX, scaleSpikes[i].y*ratioY, scaleSpikes[i].z);
+            spike.transform.localScale = scaleSpikes[i];
+
             spike.gameObject.name = "Spike "+id;
         }
     }
