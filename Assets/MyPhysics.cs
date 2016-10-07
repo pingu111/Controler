@@ -157,6 +157,9 @@ public class MyPhysics : MonoBehaviour
 
     public void playerHasCollided(BoxCollider collider)
     {
+        Debug.Log(collider.gameObject + " entered");
+
+
         if (collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL)))
         {
             float distanceX = ((collider.bounds.size.x + move.GetComponent<Collider>().bounds.size.x) / 2);
@@ -204,6 +207,8 @@ public class MyPhysics : MonoBehaviour
 
     public void playerHasExitCollider(BoxCollider collider)
     {
+        Debug.Log(collider.gameObject + " exited");
+
         if (collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL)))
         {
             isInContactWithLeftWall = false;
