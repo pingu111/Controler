@@ -12,15 +12,17 @@ public class Particles : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-	    if(isInContactWithWall)
+	void Update ()
+    {
+        Debug.Log(emission.enabled);
+
+        if (isInContactWithWall)
         {
             emission.enabled = true;
         }
         else
         {
             emission.enabled = false;
-
         }
     }
 }

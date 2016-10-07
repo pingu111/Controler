@@ -94,6 +94,8 @@ public class MovePlayer : MonoBehaviour
                 isInContactWithWall = true;
                 doubleJumpedUsed = false;
                 singleJumpUsed = false;
+                if (this.transform.GetChild(0).gameObject.GetComponent<Particles>() != null)
+                    this.transform.GetChild(0).gameObject.GetComponent<Particles>().isInContactWithWall = this.isInContactWithWall;
             }
 
             if (collision.GetType() == typeof(BoxCollider))
@@ -127,6 +129,8 @@ public class MovePlayer : MonoBehaviour
             || collision.gameObject.tag == StringEnum.GetStringValue(Tags.LEFT_WALL))
         {
             isInContactWithWall = false;
+            if (this.transform.GetChild(0).gameObject.GetComponent<Particles>() != null)
+                this.transform.GetChild(0).gameObject.GetComponent<Particles>().isInContactWithWall = this.isInContactWithWall;
         }
 
         if (collision.gameObject.tag != StringEnum.GetStringValue(Tags.SPIKE))
