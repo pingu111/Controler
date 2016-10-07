@@ -26,7 +26,7 @@ public class SpikeScript : MonoBehaviour
     /// <summary>
     /// % of the camera that can see the spike, when out
     /// </summary>
-    private float translateInCamera = 0.05f;
+    public float translateInCamera = 0.05f;
 
      /// <summary>
     /// Original translation speed of the spikes

@@ -115,11 +115,11 @@ public class SpikeFactory : MonoBehaviour
     /// </summary>
     void initSpikes()
     {
-        float ratioX = Screen.width / normalResolution.x;
-        float ratioY = Screen.height / normalResolution.y;
+        float normalRatio = (normalResolution.x / normalResolution.y);
+        float ratio = ((float)Screen.width / (float)Screen.height);
         Debug.Log(Screen.width + " " + normalResolution.x);
         Debug.Log(Screen.height + " " + normalResolution.y);
-        Debug.Log(ratioX + " " + ratioY);
+        Debug.Log(ratio +" "+normalRatio);
 
         //We create all the spikes
         for (int i = 0; i < posSpike.Count; i ++)
@@ -128,18 +128,19 @@ public class SpikeFactory : MonoBehaviour
             int id = i + 1;
             spike.GetComponent<SpikeScript>().idSpike = id;
             spike.GetComponent<SpikeScript>().idGroupSpike = idGroupSpikes[i];
-
             spike.transform.parent = this.transform;
 
             Vector3 posSpikeWorld = Camera.main.ViewportToWorldPoint(posSpike[i]);
 
-          //  spike.transform.position = new Vector3(posSpikeWorld.x* ratioX, posSpikeWorld.y* ratioY, -1);
             spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
+           // spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
 
             spike.transform.Rotate(orientationsSpikes[i]);
 
-           // spike.transform.localScale = new Vector3( scaleSpikes[i].x*ratioX, scaleSpikes[i].y*ratioY, scaleSpikes[i].z);
-            spike.transform.localScale = scaleSpikes[i];
+            spike.transform.localScale = new Vector3(scaleSpikes[i].x, scaleSpikes[i].y, scaleSpikes[i].z);
+            //spike.transform.localScale = scaleSpikes[i];
+
+            spike.GetComponent<SpikeScript>().translateInCamera = 0.05f;
 
             spike.gameObject.name = "Spike "+id;
         }
