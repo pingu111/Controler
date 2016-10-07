@@ -22,7 +22,7 @@ public class MyPhysics : MonoBehaviour
     /// <summary>
     /// la scale du joueur calculee
     /// </summary>
-    public Vector2 scale { get; private set; }
+    public Vector3 scale { get; private set; }
 
     /// <summary>
     /// le joueur sur qui le gravite joue
@@ -62,7 +62,7 @@ public class MyPhysics : MonoBehaviour
 	void Start ()
     {
         speed = new Vector2(0,0);
-        scale = new Vector2(1, 1);
+        scale = new Vector3(1, 1, 1);
         isInContactWithLeftWall = false;
         isInContactWithRightWall = false;
         isInContactWithPlateform = false;
@@ -103,7 +103,7 @@ public class MyPhysics : MonoBehaviour
     // Update is called once per frame
 	void Update ()
     {
-        scale = new Vector2(1, 1);
+        scale = new Vector3(1, 1, 1);
         acceleration = playerGivenAcceleration;
         //le coefficient de friction correspondant pour l'etat du player
         float coeff = groundDragCoeff;
@@ -122,7 +122,6 @@ public class MyPhysics : MonoBehaviour
                     acceleration.y = 0;
                 if (speed.y > 0)
                 {
-                    scale = new Vector2(scale.x,scale.y-(speed.y/maxSpeed));
                     speed.y = 0;
                 }
             }
@@ -133,7 +132,6 @@ public class MyPhysics : MonoBehaviour
                     acceleration.y = 0;
                 if (speed.y < 0)
                 {
-                    scale = new Vector2(scale.x, scale.y - (speed.y / maxSpeed));
                     speed.y = 0;
                 }
             }
@@ -143,7 +141,6 @@ public class MyPhysics : MonoBehaviour
                     acceleration.x = 0;
                 if (speed.x < 0)
                 {
-                    scale = new Vector2(scale.x - (speed.x / maxSpeed), scale.y);
                     speed.x = 0;
                 }
             }
@@ -153,7 +150,6 @@ public class MyPhysics : MonoBehaviour
                     acceleration.x = 0;
                 if (speed.x > 0)
                 {
-                    scale = new Vector2(scale.x - (speed.x / maxSpeed), scale.y);
                     speed.x = 0;
                 }
             }
@@ -168,7 +164,7 @@ public class MyPhysics : MonoBehaviour
 
         //update position
         speed = speed + (acceleration * Time.deltaTime);
-        scale = new Vector2(scale.x-(speed.x/maxSpeed), scale.y-(speed.y/maxSpeed));
+        scale = new Vector3(1, scale.y+(speed.y/(2*maxSpeed)), 1);
         drag(coeff);
         position = position + (speed * Time.deltaTime);
 	}
