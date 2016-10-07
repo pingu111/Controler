@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MyPhysics : MonoBehaviour
 {
@@ -23,6 +23,8 @@ public class MyPhysics : MonoBehaviour
     /// la scale du joueur calculee
     /// </summary>
     public Vector3 scale { get; private set; }
+
+    private static List<BoxCollider> colliderList;
 
     /// <summary>
     /// le joueur sur qui le gravite joue
@@ -100,6 +102,35 @@ public class MyPhysics : MonoBehaviour
         acceleration.y -= gravity;
     }
 
+    /// <summary>
+    /// check if the player is out of the given walls
+    /// reset his position accordingly
+    /// </summary>
+    // potential problem if distance between wall are smaller than the player
+    private void checkOutOfWall()
+    {
+        Debug.Assert(colliderList != null);
+        foreach(BoxCollider collider in colliderList)
+        {
+            if (position.x<collider.transform.position.x && collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL)))
+            {
+                playerHasCollided(collider);
+            }
+            else if (position.x > collider.transform.position.x && collider.CompareTag(StringEnum.GetStringValue(Tags.RIGHT_WALL)))
+            {
+                playerHasCollided(collider);
+            }
+            else if (position.y < collider.transform.position.y && collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM)))
+            {
+                playerHasCollided(collider);
+            }
+            else if (position.y > collider.transform.position.y && collider.CompareTag(StringEnum.GetStringValue(Tags.ROOF)))
+            {
+                playerHasCollided(collider);
+            }
+        }
+    }
+
     // Update is called once per frame
 	void Update ()
     {
@@ -167,6 +198,7 @@ public class MyPhysics : MonoBehaviour
         scale = new Vector3(1, scale.y+(speed.y/(2*maxSpeed)), 1);
         drag(coeff);
         position = position + (speed * Time.deltaTime);
+        checkOutOfWall();
 	}
 
     public void playerHasCollided(BoxCollider collider)
@@ -239,5 +271,10 @@ public class MyPhysics : MonoBehaviour
         {
             isInContactWithRoof = false;
         }
+    }
+
+    public static void newWall(BoxCollider collider)
+    {
+        colliderList.Add(collider);
     }
 }
