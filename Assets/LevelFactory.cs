@@ -65,14 +65,17 @@ public class LevelFactory : MonoBehaviour
                 Destroy(child.gameObject);
             }
             else
+            {
                 Destroy(child.gameObject.GetComponent<PlatformScript>());
+                MyPhysics.newWall(child.gameObject.GetComponent<BoxCollider>());
+            }
         }
 
         GameObject roof = Instantiate(platformPrefab);
         roof.transform.parent = this.transform;
         roof.transform.localScale = new Vector3(120, 1, 1);
         Vector3 posRoof = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
-        roof.transform.position = new Vector3(0, posRoof.y - ground.GetComponent<Collider>().bounds.size.y / 2, 0);
+        roof.transform.position = new Vector3(0, posRoof.y - roof.GetComponent<Collider>().bounds.size.y / 2, 0);
         roof.gameObject.name = "Roof";
         foreach (Transform child in roof.transform)
         {
@@ -80,7 +83,10 @@ public class LevelFactory : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+            else
+                MyPhysics.newWall(child.gameObject.GetComponent<BoxCollider>());
         }
+
 
         GameObject leftWall = Instantiate(platformPrefab);
         leftWall.transform.parent = this.transform;
@@ -94,7 +100,10 @@ public class LevelFactory : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+            else
+                MyPhysics.newWall(child.gameObject.GetComponent<BoxCollider>());
         }
+
 
         GameObject rightWall = Instantiate(platformPrefab);
         rightWall.transform.parent = this.transform;
@@ -108,6 +117,8 @@ public class LevelFactory : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+            else
+                MyPhysics.newWall(child.gameObject.GetComponent<BoxCollider>());
         }
     }
 
