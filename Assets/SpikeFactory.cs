@@ -115,9 +115,10 @@ public class SpikeFactory : MonoBehaviour
     /// </summary>
     void initSpikes()
     {
-        float ratioX = Screen.currentResolution.width / normalResolution.x;
-        float ratioY = Screen.currentResolution.height / normalResolution.y;
-        Debug.Log(Screen.currentResolution + " " + normalResolution);
+        float ratioX = Screen.width / normalResolution.x;
+        float ratioY = Screen.height / normalResolution.y;
+        Debug.Log(Screen.width + " " + normalResolution.x);
+        Debug.Log(Screen.height + " " + normalResolution.y);
         Debug.Log(ratioX + " " + ratioY);
 
         //We create all the spikes

@@ -55,21 +55,16 @@ public class MovePlayer : MonoBehaviour
         if (cameraLimits.x < 0 || cameraLimits.x > 1f ||
             cameraLimits.y < 0 || cameraLimits.y > 1f)
         {
-            Debug.Log("Lose hors ecran");
-
             EventManager.raise(MyEventTypes.ONLOSE);
         }
     }
 
     void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject + " entered");
-
         if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.SPIKE))
         {
             if(collision.gameObject.GetComponent<SpikeScript>() != null && collision.gameObject.GetComponent<SpikeScript>().canKillPlayer)
             {
-                Debug.Log("Lose " + collision.gameObject.GetComponent<SpikeScript>().canKillPlayer);
                 EventManager.raise(MyEventTypes.ONLOSE);
             }
         }
@@ -113,8 +108,6 @@ public class MovePlayer : MonoBehaviour
 
     void OnTriggerExit(Collider collision)
     {
-        Debug.Log(collision.gameObject + " exited");
-
         // If we exited normally the platform
         if (lastCollider == collision)
             EventManager.removeActionFromEvent(MyEventTypes.PLATFORMHIDEN, platformExited);

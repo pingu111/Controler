@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26bb6eb9232e5ec469f797755272fa2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 1000011866770178, guid: b95be7602a54a1142b60044513f22a5b,
+  platformPrefab: {fileID: 1000013410899636, guid: b95be7602a54a1142b60044513f22a5b,
     type: 2}
   posPlatforms:
   - {x: 0.5, y: 0.2, z: 0}
@@ -266,7 +266,7 @@ MonoBehaviour:
   - {x: 5, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   scaleWalls:
-  - {x: 1, y: 3, z: 0}
+  - {x: 1, y: 3, z: 1}
 --- !u!1 &740807263
 GameObject:
   m_ObjectHideFlags: 0

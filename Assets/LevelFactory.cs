@@ -154,7 +154,6 @@ public class LevelFactory : MonoBehaviour
             Vector3 posPlatform = Camera.main.ViewportToWorldPoint(pos);
             platform.transform.position = new Vector3(posPlatform.x, posPlatform.y, 0);
             platform.transform.localScale = scale;
-            platform.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
 
             foreach (Transform child in platform.transform)
             {
