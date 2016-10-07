@@ -120,14 +120,14 @@ public class LevelManager : MonoBehaviour
 
             if (Random.Range(0, 100) < 80)
             {
-                randomId = (int)Random.Range(1, nbGroupSpikes - 0.01f);
+                randomId = Random.Range(0, nbGroupSpikes);
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, nextTime, randomId));
                 nbSpikeToOut++;
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, nextTime + 4, randomId));
             }
             else
             {
-                randomId = (int)Random.Range(1, nbSpikes - 0.01f);
+                randomId = (int)Random.Range(0, nbSpikes);
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEOUT, nextTime, randomId));
                 nbSpikeToOut++;
                 listEvents.Add(new ScriptedEvent(TypeScriptedEvent.SPIKEIN, nextTime + 4, randomId));
@@ -147,13 +147,13 @@ public class LevelManager : MonoBehaviour
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 4, 4));
 
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 6, 5));
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 6, 1));
+        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 6, 0));
         nbSpikeToOut++;
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 10, 1));
+        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 10, 0));
 
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 9, 6));
+        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEOUT, 9, 5));
         nbSpikeToOut++;
-        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 13, 6));
+        listEvents.Add(new ScriptedEvent(TypeScriptedEvent.GROUPSPIKEIN, 13, 5));
 
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 12, 6));
         listEvents.Add(new ScriptedEvent(TypeScriptedEvent.TEXT, 15, 42));

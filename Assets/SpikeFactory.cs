@@ -126,9 +126,9 @@ public class SpikeFactory : MonoBehaviour
         for (int i = 0; i < posSpike.Count; i ++)
         {
             GameObject spike = Instantiate(spikePrefab);
-            int id = i + 1;
+            int id = i;
             spike.GetComponent<SpikeScript>().idSpike = id;
-            spike.GetComponent<SpikeScript>().idGroupSpike = idGroupSpikes[i];
+            spike.GetComponent<SpikeScript>().idGroupSpike = idGroupSpikes[i] - 1;
             spike.transform.parent = this.transform;
 
             Vector3 posSpikeWorld = Camera.main.ViewportToWorldPoint(posSpike[i]);
