@@ -152,11 +152,22 @@ public class MovePlayer : MonoBehaviour
                 {
                     this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
                     singleJumpUsed = true;
+                    if(this.gameObject.GetComponent<AudioSource>() != null)
+                    {
+                        AudioSource audio = this.gameObject.GetComponent<AudioSource>();
+                        audio.Play();
+                    }
+                   
                 }
                 else if (!doubleJumpedUsed && singleJumpUsed)
                 {
                     this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
                     doubleJumpedUsed = true;
+                    if (this.gameObject.GetComponent<AudioSource>() != null)
+                    {
+                        AudioSource audio = this.gameObject.GetComponent<AudioSource>();
+                        audio.Play();
+                    }
                 }
             }
             else
