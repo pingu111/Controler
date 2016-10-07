@@ -69,6 +69,14 @@ public class SpikeFactory : MonoBehaviour
         orientationsSpikes = new List<Vector3>();
         idGroupSpikes = new List<int>();
 
+        // We calculate the position of the wall spikes
+        float scaleY = 0;
+        float ratioSpikeInScreen = ((float)Screen.width / (float)Screen.height);
+        Debug.Log(ratioSpikeInScreen+" "+ Screen.width+" "+ Screen.height);
+        // Sur un echantillon representatif
+        scaleY = 2.0f*ratioSpikeInScreen + 0.4f;
+        Debug.Log(scaleY);
+
         for (int i = 0; i < nbSpikesGround; i++)
         {
             float delta =(float)( 1.0f / (float)(nbSpikesGround + 1));
@@ -88,7 +96,7 @@ public class SpikeFactory : MonoBehaviour
             float posY = delta + i * delta;
             posSpike.Add(new Vector3(-0.105f, posY, 0));
 
-            scaleSpikes.Add(new Vector3(0.5f, 4, 1));
+            scaleSpikes.Add(new Vector3(0.5f, scaleY, 1));
             orientationsSpikes.Add(new Vector3(0, 0, 90));
 
             int idGroup = (int)(i / (nbSpikesWall / nbGroupWall)) + 1 + nbGroupGround;
@@ -101,7 +109,7 @@ public class SpikeFactory : MonoBehaviour
             float posY = delta + i * delta;
             posSpike.Add(new Vector3(1.105f, posY, 0));
 
-            scaleSpikes.Add(new Vector3(0.5f, 4, 1));
+            scaleSpikes.Add(new Vector3(0.5f, scaleY, 1));
             orientationsSpikes.Add(new Vector3(0, 0, -90));
 
             int idGroup = (int)(i / (nbSpikesWall / nbGroupWall)) + 1 + nbGroupGround + nbGroupWall;
@@ -115,12 +123,6 @@ public class SpikeFactory : MonoBehaviour
     /// </summary>
     void initSpikes()
     {
-        float normalRatio = (normalResolution.x / normalResolution.y);
-        float ratio = ((float)Screen.width / (float)Screen.height);
-        Debug.Log(Screen.width + " " + normalResolution.x);
-        Debug.Log(Screen.height + " " + normalResolution.y);
-        Debug.Log(ratio +" "+normalRatio);
-
         //We create all the spikes
         for (int i = 0; i < posSpike.Count; i ++)
         {
@@ -132,13 +134,14 @@ public class SpikeFactory : MonoBehaviour
 
             Vector3 posSpikeWorld = Camera.main.ViewportToWorldPoint(posSpike[i]);
 
+            if (orientationsSpikes[i].z != 0)
+            {
+            }
+
             spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
-           // spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
 
             spike.transform.Rotate(orientationsSpikes[i]);
-
-            spike.transform.localScale = new Vector3(scaleSpikes[i].x, scaleSpikes[i].y, scaleSpikes[i].z);
-            //spike.transform.localScale = scaleSpikes[i];
+            spike.transform.localScale = scaleSpikes[i];
 
             spike.GetComponent<SpikeScript>().translateInCamera = 0.05f;
 
