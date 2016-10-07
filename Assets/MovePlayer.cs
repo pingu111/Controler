@@ -108,6 +108,7 @@ public class MovePlayer : MonoBehaviour
     /// </summary>
     void platformExited()
     {
+        isInContactWithPlatform = false;
         if(this.GetComponent<MyPhysics>() != null)
             this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)lastCollider);
     }
@@ -144,24 +145,29 @@ public class MovePlayer : MonoBehaviour
     {
         float xAxis = Input.GetAxis("XAxis");
         this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.y, 0);
+        if (this.gameObject.GetComponent<MyPhysics>() != null)
+            if (Input.GetButtonDown("Jump"))
+            {
+                if(!singleJumpUsed)
+                {
+                    this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
+                    singleJumpUsed = true;
+                }
+                else if (!doubleJumpedUsed && singleJumpUsed)
+                {
+                    this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
+                    doubleJumpedUsed = true;
+                }
+            }
+            else
+            {
+                GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(GetComponent<MyPhysics>().playerGivenAcceleration.x, 0, 0);
+            }
+    }
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            if(!singleJumpUsed)
-            {
-                this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
-                singleJumpUsed = true;
-            }
-            else if (!doubleJumpedUsed && singleJumpUsed)
-            {
-                this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
-                doubleJumpedUsed = true;
-            }
-        }
-        else
-        {
-            GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(GetComponent<MyPhysics>().playerGivenAcceleration.x, 0, 0);
-        }
+    void OnDestroy()
+    {
+        EventManager.removeActionFromEvent(MyEventTypes.PLATFORMHIDEN, platformExited);
     }
 }
 
