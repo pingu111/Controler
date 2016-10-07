@@ -273,7 +273,6 @@ public class MyPhysics : MonoBehaviour
 
     public static void newWall(BoxCollider collider)
     {
-        Debug.Log(collider.gameObject);
         if (colliderList == null)
             colliderList = new List<BoxCollider>();
         colliderList.Add(collider);
