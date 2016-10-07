@@ -49,6 +49,7 @@ public class MovePlayer : MonoBehaviour
     private void movePlayerFromPhysics()
     {
         this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;
+        this.gameObject.transform.localScale = this.gameObject.GetComponent<MyPhysics>().scale;
 
         Vector3 cameraLimits = Camera.main.WorldToViewportPoint(this.gameObject.transform.position);
         if (cameraLimits.x < 0 || cameraLimits.x > 1f ||
