@@ -35,6 +35,19 @@ public class MovePlayer : MonoBehaviour
     void Update()
     {
         controls();
+        movePlayerFromPhysics();
+    }
+
+    /// <summary>
+    /// We use a lateUpdate because of the collisions 
+    /// </summary>
+    void LateUpdate()
+    {
+        movePlayerFromPhysics();
+    }
+
+    private void movePlayerFromPhysics()
+    {
         this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;
         this.gameObject.transform.localScale = this.gameObject.GetComponent<MyPhysics>().scale;
 
@@ -42,23 +55,27 @@ public class MovePlayer : MonoBehaviour
         if (cameraLimits.x < 0 || cameraLimits.x > 1f ||
             cameraLimits.y < 0 || cameraLimits.y > 1f)
         {
+            Debug.Log("Lose hors ecran");
+
             EventManager.raise(MyEventTypes.ONLOSE);
         }
     }
-
 
     void OnTriggerEnter(Collider collision)
     {
         Debug.Log(collision.gameObject + " entered");
 
-        if (collision.gameObject.tag == "Spike")
+        if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.SPIKE))
         {
             if(collision.gameObject.GetComponent<SpikeScript>() != null && collision.gameObject.GetComponent<SpikeScript>().canKillPlayer)
+            {
+                Debug.Log("Lose " + collision.gameObject.GetComponent<SpikeScript>().canKillPlayer);
                 EventManager.raise(MyEventTypes.ONLOSE);
+            }
         }
         else
         {
-            if (collision.gameObject.tag == "Platform")
+            if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.PLATFORM))
             {
                 // If it's a platform and not the ground
                 if (collision.gameObject.GetComponent<PlatformScript>() != null)
@@ -72,8 +89,8 @@ public class MovePlayer : MonoBehaviour
                 isInContactWithPlatform = true;
                 doubleJumpedUsed = false;
             }
-            else if (collision.gameObject.tag == "RightWallPlatform"
-                || collision.gameObject.tag == "LeftWallPlatform")
+            else if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.RIGHT_WALL)
+                || collision.gameObject.tag == StringEnum.GetStringValue(Tags.LEFT_WALL))
             {
                 isInContactWithWall = true;
                 doubleJumpedUsed = false;
@@ -102,18 +119,18 @@ public class MovePlayer : MonoBehaviour
         if (lastCollider == collision)
             EventManager.removeActionFromEvent(MyEventTypes.PLATFORMHIDEN, platformExited);
 
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.PLATFORM))
         {
             isInContactWithPlatform = false;
-            if (collision.GetType() == typeof(BoxCollider))
-                this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
-            else
-                Debug.Log("CRITICAL " + collision.gameObject + " PLATFORM NOT BOXCOLLIDER");
         }
-        else if (collision.gameObject.tag == "RightWallPlatform"
-            || collision.gameObject.tag == "LeftWallPlatform")
+        else if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.RIGHT_WALL)
+            || collision.gameObject.tag == StringEnum.GetStringValue(Tags.LEFT_WALL))
         {
             isInContactWithWall = false;
+        }
+
+        if(collision.gameObject.tag != StringEnum.GetStringValue(Tags.SPIKE))
+        {
             if (collision.GetType() == typeof(BoxCollider))
                 this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
             else

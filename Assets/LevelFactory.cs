@@ -15,6 +15,12 @@ public class LevelFactory : MonoBehaviour
     /// 
     public List<Vector3> posPlatforms;
 
+    /// <summary>
+    /// List of the position of the walls
+    /// Position : betweeen 0 and 1
+    /// </summary>
+    /// 
+    public List<Vector3> posWalls;
 
     /// <summary>
     /// List of the scale of the platforms
@@ -22,18 +28,26 @@ public class LevelFactory : MonoBehaviour
     /// </summary>
     public List<Vector3> scalePlatforms;
 
+    /// <summary>
+    /// List of the scale of the walls
+    /// Scale : whatever you want
+    /// </summary>
+    public List<Vector3> scaleWalls;
+
     // Use this for initialization
     void Start ()
     {
         // XML read of the platforms ?
 
-        if (posPlatforms.Count != scalePlatforms.Count)
-            Debug.Log("CRITICAL pos != scale");
+        Debug.Assert(posWalls.Count == scaleWalls.Count);
+        Debug.Assert(posPlatforms.Count == scalePlatforms.Count);
 
         initWalls();
         initPlatforms();
-	}
-	
+        initPlatformsWalls();
+
+    }
+
     /// <summary>
     /// Initialize the walls, ground, and roof
     /// </summary>
@@ -117,7 +131,35 @@ public class LevelFactory : MonoBehaviour
 
             foreach (Transform child in platform.transform)
             {
-                if (child.gameObject.tag != "Platform")
+                if (child.gameObject.tag != StringEnum.GetStringValue(Tags.PLATFORM))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Init some little walls
+    /// </summary>
+    void initPlatformsWalls()
+    {
+        for (int i = 0; i < posWalls.Count; i++)
+        {
+            Vector3 pos = posWalls[i];
+            Vector3 scale = scaleWalls[i];
+
+            GameObject platform = Instantiate(platformPrefab);
+            platform.transform.parent = this.transform;
+            platform.gameObject.name = "PlatformWall";
+            Vector3 posPlatform = Camera.main.ViewportToWorldPoint(pos);
+            platform.transform.position = new Vector3(posPlatform.x, posPlatform.y, 0);
+            platform.transform.localScale = scale;
+
+            foreach (Transform child in platform.transform)
+            {
+                if (child.gameObject.tag != StringEnum.GetStringValue(Tags.LEFT_WALL) &&
+                    child.gameObject.tag != StringEnum.GetStringValue(Tags.RIGHT_WALL))
                 {
                     Destroy(child.gameObject);
                 }

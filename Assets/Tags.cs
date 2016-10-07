@@ -17,7 +17,9 @@ public enum Tags
     [StringValue("Platform")]
     PLATFORM,
     [StringValue("Roof")]
-    ROOF
+    ROOF,
+    [StringValue("Spike")]
+    SPIKE
 }
 
 public class StringValue : System.Attribute

@@ -112,7 +112,6 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-
         // If we don't have any more spikes to lever
         if (nbSpikeToOut < (int)nbSpikeSameTime)
         {
