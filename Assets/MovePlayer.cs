@@ -35,16 +35,30 @@ public class MovePlayer : MonoBehaviour
     void Update()
     {
         controls();
+        movePlayerFromPhysics();
+    }
+
+    /// <summary>
+    /// We use a lateUpdate because of the collisions 
+    /// </summary>
+    void LateUpdate()
+    {
+        movePlayerFromPhysics();
+    }
+
+    private void movePlayerFromPhysics()
+    {
         this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;
 
         Vector3 cameraLimits = Camera.main.WorldToViewportPoint(this.gameObject.transform.position);
         if (cameraLimits.x < 0 || cameraLimits.x > 1f ||
             cameraLimits.y < 0 || cameraLimits.y > 1f)
         {
+            Debug.Log("Lose hors ecran");
+
             EventManager.raise(MyEventTypes.ONLOSE);
         }
     }
-
 
     void OnTriggerEnter(Collider collision)
     {
@@ -53,7 +67,10 @@ public class MovePlayer : MonoBehaviour
         if (collision.gameObject.tag == "Spike")
         {
             if(collision.gameObject.GetComponent<SpikeScript>() != null && collision.gameObject.GetComponent<SpikeScript>().canKillPlayer)
+            {
+                Debug.Log("Lose " + collision.gameObject.GetComponent<SpikeScript>().canKillPlayer);
                 EventManager.raise(MyEventTypes.ONLOSE);
+            }
         }
         else
         {
