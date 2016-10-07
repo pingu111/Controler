@@ -187,7 +187,10 @@ public class MyPhysics : MonoBehaviour
             gravityCalculator();
 
         //update position
-        speed = speed + (acceleration * Time.deltaTime);
+        if (playerGivenAcceleration.Equals(new Vector2(0, 0)))
+            speed = speed + (acceleration * Time.deltaTime);
+        else
+            speed = speed + (0.02f * acceleration);
         scale = new Vector3(1, scale.y+(speed.y/(2*maxSpeed)), 1);
         drag(coeff);
         position = position + (speed * Time.deltaTime);
