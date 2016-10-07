@@ -38,14 +38,6 @@ public class MovePlayer : MonoBehaviour
         movePlayerFromPhysics();
     }
 
-    /// <summary>
-    /// We use a lateUpdate because of the collisions 
-    /// </summary>
-    void LateUpdate()
-    {
-        movePlayerFromPhysics();
-    }
-
     private void movePlayerFromPhysics()
     {
         this.gameObject.transform.position = this.gameObject.GetComponent<MyPhysics>().position;

@@ -30,10 +30,10 @@ public class MyPhysics : MonoBehaviour
     /// le joueur sur qui le gravite joue
     /// </summary>
     private MovePlayer move;
-    private bool isInContactWithLeftWall;
-    private bool isInContactWithRightWall;
-    private bool isInContactWithPlateform;
-    private bool isInContactWithRoof;
+    public bool isInContactWithLeftWall;
+    public bool isInContactWithRightWall;
+    public bool isInContactWithPlateform;
+    public bool isInContactWithRoof;
 
 
     /// <summary>
@@ -104,7 +104,7 @@ public class MyPhysics : MonoBehaviour
 
     /// <summary>
     /// check if the player is out of the given walls
-    /// reset his position accordingly
+    /// reset his position accordingly and set the booleans
     /// </summary>
     // potential problem if distance between wall are smaller than the player
     private void checkOutOfWall()
@@ -112,21 +112,14 @@ public class MyPhysics : MonoBehaviour
         Debug.Assert(colliderList != null);
         foreach(BoxCollider collider in colliderList)
         {
-            if (position.x<collider.transform.position.x && collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL)))
+            if (   position.x < collider.transform.position.x && collider.CompareTag(StringEnum.GetStringValue(Tags.LEFT_WALL))
+                || position.x > collider.transform.position.x && collider.CompareTag(StringEnum.GetStringValue(Tags.RIGHT_WALL))
+                || position.y < collider.transform.position.y && collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM))
+                || position.y > collider.transform.position.y && collider.CompareTag(StringEnum.GetStringValue(Tags.ROOF))
+               )
             {
                 playerHasCollided(collider);
-            }
-            else if (position.x > collider.transform.position.x && collider.CompareTag(StringEnum.GetStringValue(Tags.RIGHT_WALL)))
-            {
-                playerHasCollided(collider);
-            }
-            else if (position.y < collider.transform.position.y && collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM)))
-            {
-                playerHasCollided(collider);
-            }
-            else if (position.y > collider.transform.position.y && collider.CompareTag(StringEnum.GetStringValue(Tags.ROOF)))
-            {
-                playerHasCollided(collider);
+                playerHasExitCollider(collider);
             }
         }
     }
@@ -212,6 +205,7 @@ public class MyPhysics : MonoBehaviour
             float wallPosition = collider.transform.position.x + collider.center.x;
             speed.x = 0;
             position = new Vector2(wallPosition + distanceX, position.y);
+            Debug.Log("leftWall");
             isInContactWithLeftWall = true;
         }
         else if (collider.CompareTag(StringEnum.GetStringValue(Tags.RIGHT_WALL)))
@@ -220,6 +214,7 @@ public class MyPhysics : MonoBehaviour
             float wallPosition = collider.transform.position.x + collider.center.x;
             speed.x = 0;
             position = new Vector2(wallPosition - distanceX, position.y);
+            Debug.Log("RightWall");
             isInContactWithRightWall = true;
         }
         else if (collider.CompareTag(StringEnum.GetStringValue(Tags.PLATFORM)))
@@ -233,6 +228,7 @@ public class MyPhysics : MonoBehaviour
             float platformPosition = center + positionCollider;
             speed.y = 0;
             position = new Vector2(position.x, platformPosition + distanceY);
+            Debug.Log("plat");
             isInContactWithPlateform = true;
         }
         else if(collider.CompareTag(StringEnum.GetStringValue(Tags.ROOF)))
@@ -246,6 +242,8 @@ public class MyPhysics : MonoBehaviour
             float platformPosition = center + positionCollider;
             speed.y = 0;
             position = new Vector2(position.x, platformPosition - distanceY);
+
+            Debug.Log("roof");
             isInContactWithRoof = true;
         }
 
