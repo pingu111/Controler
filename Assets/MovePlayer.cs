@@ -96,6 +96,7 @@ public class MovePlayer : MonoBehaviour
     void OnTriggerExit(Collider collision)
     {
         Debug.Log(collision.gameObject + " exited");
+
         // If we exited normally the platform
         if (lastCollider == collision)
             EventManager.removeActionFromEvent(MyEventTypes.PLATFORMHIDEN, platformExited);

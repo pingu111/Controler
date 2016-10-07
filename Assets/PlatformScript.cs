@@ -43,8 +43,11 @@ public class PlatformScript : MonoBehaviour {
 	
     public void platformTouched()
     {
-        lastTimeDesactivated = Time.time;
-        this.transform.parent.gameObject.GetComponent<Renderer>().material.color = new Color(100,0,0);
+        if(lastTimeDesactivated == 0)
+        {
+            lastTimeDesactivated = Time.time;
+            this.transform.parent.gameObject.GetComponent<Renderer>().material.color = new Color(100, 0, 0);
+        }
     }
 
     /// <summary>
