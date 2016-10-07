@@ -259,14 +259,14 @@ MonoBehaviour:
     type: 2}
   posPlatforms:
   - {x: 0.5, y: 0.2, z: 0}
+  - {x: 0.8, y: 0.5, z: 0}
+  posWalls:
   - {x: 0.1, y: 0.7, z: 0}
-  - {x: 0.95, y: 0.5, z: 0}
-  posWalls: []
   scalePlatforms:
   - {x: 5, y: 1, z: 1}
-  - {x: 3, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
-  scaleWalls: []
+  scaleWalls:
+  - {x: 1, y: 3, z: 0}
 --- !u!1 &740807263
 GameObject:
   m_ObjectHideFlags: 0
