@@ -19,6 +19,10 @@ public class MyPhysics : MonoBehaviour
     /// la position calculee du joueur
     /// </summary>
     public Vector2 position { get; private set; }
+    /// <summary>
+    /// la scale du joueur calculee
+    /// </summary>
+    public Vector2 scale { get; private set; }
 
     /// <summary>
     /// le joueur sur qui le gravite joue
@@ -58,6 +62,7 @@ public class MyPhysics : MonoBehaviour
 	void Start ()
     {
         speed = new Vector2(0,0);
+        scale = new Vector2(1, 1);
         isInContactWithLeftWall = false;
         isInContactWithRightWall = false;
         isInContactWithPlateform = false;
@@ -94,15 +99,20 @@ public class MyPhysics : MonoBehaviour
     {
         acceleration.y -= gravity;
     }
-    
+
     // Update is called once per frame
 	void Update ()
     {
+        scale = new Vector2(1, 1);
         acceleration = playerGivenAcceleration;
         //le coefficient de friction correspondant pour l'etat du player
         float coeff = groundDragCoeff;
         bool isGravityEnabled = true;
 
+
+        // if the player is in contact with something calculate his new position
+        // set isGravityEnabled and the dragCoeff
+        // rescale the player if Delta speed != 0
         if (isInContactWithLeftWall || isInContactWithPlateform || isInContactWithRightWall || isInContactWithRoof)
         {
             if (isInContactWithRoof)
@@ -111,7 +121,10 @@ public class MyPhysics : MonoBehaviour
                 if (acceleration.y > 0)
                     acceleration.y = 0;
                 if (speed.y > 0)
+                {
+                    scale = new Vector2(scale.x,scale.y-(speed.y/maxSpeed));
                     speed.y = 0;
+                }
             }
             else if (isInContactWithPlateform)
             {
@@ -119,21 +132,30 @@ public class MyPhysics : MonoBehaviour
                 if (acceleration.y < 0)
                     acceleration.y = 0;
                 if (speed.y < 0)
+                {
+                    scale = new Vector2(scale.x, scale.y - (speed.y / maxSpeed));
                     speed.y = 0;
+                }
             }
             if (isInContactWithLeftWall)
             {
                 if (acceleration.x < 0)
                     acceleration.x = 0;
                 if (speed.x < 0)
+                {
+                    scale = new Vector2(scale.x - (speed.x / maxSpeed), scale.y);
                     speed.x = 0;
+                }
             }
             else if (isInContactWithRightWall)
             {
                 if (acceleration.x > 0)
                     acceleration.x = 0;
                 if (speed.x > 0)
+                {
+                    scale = new Vector2(scale.x - (speed.x / maxSpeed), scale.y);
                     speed.x = 0;
+                }
             }
         }
         else//no contact
@@ -141,18 +163,14 @@ public class MyPhysics : MonoBehaviour
             coeff = airDragCoeff;
             isGravityEnabled = true;
         }
-        Debug.Assert(coeff != 0);
         if(isGravityEnabled)
             gravityCalculator();
 
-
-        //Debug.Log("input :"+playerGivenAcceleration);
         //update position
         speed = speed + (acceleration * Time.deltaTime);
+        scale = new Vector2(scale.x-(speed.x/maxSpeed), scale.y-(speed.y/maxSpeed));
         drag(coeff);
         position = position + (speed * Time.deltaTime);
-        //Debug.Log("speed :" + speed);
-        //Debug.Log("position :" + position);
 	}
 
     public void playerHasCollided(BoxCollider collider)
