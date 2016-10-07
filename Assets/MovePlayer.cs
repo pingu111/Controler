@@ -25,6 +25,12 @@ public class MovePlayer : MonoBehaviour
     // Lats platform collided
     private BoxCollider lastCollider;
 
+    /// <summary>
+    /// Single jump
+    /// </summary>
+    private bool singleJumpUsed = false;
+
+
     // Use this for initialization
     void Start()
     {
@@ -34,6 +40,11 @@ public class MovePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isInContactWithPlatform || isInContactWithWall)
+        {
+            doubleJumpedUsed = false;
+            singleJumpUsed = false;
+        }
         controls();
         movePlayerFromPhysics();
     }
@@ -75,12 +86,14 @@ public class MovePlayer : MonoBehaviour
 
                 isInContactWithPlatform = true;
                 doubleJumpedUsed = false;
+                singleJumpUsed = false;
             }
             else if (collision.gameObject.tag == StringEnum.GetStringValue(Tags.RIGHT_WALL)
                 || collision.gameObject.tag == StringEnum.GetStringValue(Tags.LEFT_WALL))
             {
                 isInContactWithWall = true;
                 doubleJumpedUsed = false;
+                singleJumpUsed = false;
             }
 
             if (collision.GetType() == typeof(BoxCollider))
@@ -95,7 +108,8 @@ public class MovePlayer : MonoBehaviour
     /// </summary>
     void platformExited()
     {
-        this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)lastCollider);
+        if(this.GetComponent<MyPhysics>() != null)
+            this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)lastCollider);
     }
 
     void OnTriggerExit(Collider collision)
@@ -114,7 +128,7 @@ public class MovePlayer : MonoBehaviour
             isInContactWithWall = false;
         }
 
-        if(collision.gameObject.tag != StringEnum.GetStringValue(Tags.SPIKE))
+        if (collision.gameObject.tag != StringEnum.GetStringValue(Tags.SPIKE))
         {
             if (collision.GetType() == typeof(BoxCollider))
                 this.GetComponent<MyPhysics>().playerHasExitCollider((BoxCollider)collision);
@@ -129,14 +143,20 @@ public class MovePlayer : MonoBehaviour
     void controls()
     {
         float xAxis = Input.GetAxis("XAxis");
-        if (!isInContactWithWall)
-            this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.y, 0);
+        this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(xAxis * speedX, this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.y, 0);
 
-        if (Input.GetButtonDown("Jump") && (isInContactWithPlatform || !doubleJumpedUsed))
+        if (Input.GetButtonDown("Jump"))
         {
-            this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
-            if (!isInContactWithPlatform && !doubleJumpedUsed)
+            if(!singleJumpUsed)
+            {
+                this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
+                singleJumpUsed = true;
+            }
+            else if (!doubleJumpedUsed && singleJumpUsed)
+            {
+                this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration = new Vector3(this.gameObject.GetComponent<MyPhysics>().playerGivenAcceleration.x, speedJumpY, 0);
                 doubleJumpedUsed = true;
+            }
         }
         else
         {

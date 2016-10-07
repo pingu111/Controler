@@ -72,10 +72,9 @@ public class SpikeFactory : MonoBehaviour
         // We calculate the position of the wall spikes
         float scaleY = 0;
         float ratioSpikeInScreen = ((float)Screen.width / (float)Screen.height);
-        Debug.Log(ratioSpikeInScreen+" "+ Screen.width+" "+ Screen.height);
+
         // Sur un echantillon representatif
         scaleY = 2.0f*ratioSpikeInScreen + 0.4f;
-        Debug.Log(scaleY);
 
         for (int i = 0; i < nbSpikesGround; i++)
         {
@@ -133,10 +132,6 @@ public class SpikeFactory : MonoBehaviour
             spike.transform.parent = this.transform;
 
             Vector3 posSpikeWorld = Camera.main.ViewportToWorldPoint(posSpike[i]);
-
-            if (orientationsSpikes[i].z != 0)
-            {
-            }
 
             spike.transform.position = new Vector3(posSpikeWorld.x, posSpikeWorld.y, -1);
 

@@ -261,12 +261,12 @@ MonoBehaviour:
   - {x: 0.5, y: 0.2, z: 0}
   - {x: 0.8, y: 0.5, z: 0}
   posWalls:
-  - {x: 0.1, y: 0.7, z: 0}
+  - {x: 0.15, y: 0.7, z: 0}
   scalePlatforms:
   - {x: 5, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   scaleWalls:
-  - {x: 1, y: 3, z: 1}
+  - {x: 2, y: 8, z: 1}
 --- !u!1 &740807263
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +584,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGivenAcceleration: {x: 0, y: 0}
+  isInContactWithLeftWall: 0
+  isInContactWithRightWall: 0
+  isInContactWithPlateform: 0
+  isInContactWithRoof: 0
   gravity: 20
   maxSpeed: 100
   groundDragCoeff: 1
